@@ -1,76 +1,107 @@
+"use client"
+
+import { Box, Heading, SimpleGrid, Text, Table, Badge, Card, Stack, HStack } from "@chakra-ui/react"
 import mockData from '../services/mockData.json';
+import { FiMonitor, FiSmartphone, FiBox } from "react-icons/fi"; // Using FiBox as generic console icon since specialized ones might need other imports
 
 export default function Home() {
   return (
-    <div className="min-h-screen p-8 font-[family-name:var(--font-geist-sans)]">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold">Ubisoft Game Analytics</h1>
-        <p className="text-gray-500">Dashboard Overview</p>
-      </header>
+    <Box>
+      <Box mb="8">
+        <Heading size="2xl" mb="2">{mockData.studio.name}</Heading>
+        <Text color="fg.muted">Dashboard Overview</Text>
+      </Box>
 
-      <main className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap="6" mb="8">
         {/* Overview Cards */}
-        <div className="p-6 bg-white dark:bg-zinc-800 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-2">Total Players</h2>
-          <p className="text-4xl font-bold text-blue-600">
-            {mockData.overview.totalPlayers.toLocaleString()}
-          </p>
-        </div>
-        <div className="p-6 bg-white dark:bg-zinc-800 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-2">Active Users</h2>
-          <p className="text-4xl font-bold text-green-600">
-            {mockData.overview.activeUsers.toLocaleString()}
-          </p>
-        </div>
-        <div className="p-6 bg-white dark:bg-zinc-800 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-2">Revenue</h2>
-          <p className="text-4xl font-bold text-yellow-600">
-            ${mockData.overview.revenue.toLocaleString()}
-          </p>
-        </div>
+        <Card.Root>
+          <Card.Body>
+            <Card.Title mb="2">Active Games</Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="purple.500">
+              {mockData.studio.activeGames}
+            </Text>
+          </Card.Body>
+        </Card.Root>
 
-        {/* Games List */}
-        <div className="col-span-full bg-white dark:bg-zinc-800 rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">Active Games</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b dark:border-zinc-700">
-                  <th className="pb-3">Name</th>
-                  <th className="pb-3">Platform</th>
-                  <th className="pb-3">Active Players</th>
-                  <th className="pb-3">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {mockData.games.map((game) => (
-                  <tr
-                    key={game.id}
-                    className="border-b last:border-0 dark:border-zinc-700"
-                  >
-                    <td className="py-3 font-medium">{game.name}</td>
-                    <td className="py-3 text-gray-500">{game.platform}</td>
-                    <td className="py-3">
-                      {game.activePlayers.toLocaleString()}
-                    </td>
-                    <td className="py-3">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          game.status === 'Live'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}
-                      >
-                        {game.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </main>
-    </div>
+        <Card.Root>
+          <Card.Body>
+            <Card.Title mb="2">Monthly Active Users</Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="blue.500">
+              {mockData.studio.mau.toLocaleString()}
+            </Text>
+          </Card.Body>
+        </Card.Root>
+
+        <Card.Root>
+          <Card.Body>
+            <Card.Title mb="2">Daily Active Users</Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="green.500">
+              {mockData.studio.dau.toLocaleString()}
+            </Text>
+          </Card.Body>
+        </Card.Root>
+
+        <Card.Root>
+          <Card.Body>
+            <Card.Title mb="2">Monthly Revenue</Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="yellow.500">
+              ${(mockData.studio.monthlyRevenue / 1000000).toFixed(1)}M
+            </Text>
+            <Badge colorPalette="green" variant="surface">+{mockData.studio.growth}%</Badge>
+          </Card.Body>
+        </Card.Root>
+      </SimpleGrid>
+
+      {/* Games List */}
+      <Card.Root>
+        <Card.Header>
+          <Heading size="md">Live Games Performance</Heading>
+        </Card.Header>
+        <Card.Body>
+          <Table.Root interactive>
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader>Name</Table.ColumnHeader>
+                <Table.ColumnHeader>Genre</Table.ColumnHeader>
+                <Table.ColumnHeader>Platforms</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end">Active Players</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end">Monthly Revenue</Table.ColumnHeader>
+                <Table.ColumnHeader>Status</Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {mockData.games.map((game) => (
+                <Table.Row key={game.id}>
+                  <Table.Cell>
+                    <Stack gap="0">
+                        <Text fontWeight="medium">{game.name}</Text>
+                        <Text fontSize="xs" color="fg.muted">{game.franchise}</Text>
+                    </Stack>
+                  </Table.Cell>
+                  <Table.Cell color="fg.muted">{game.genre}</Table.Cell>
+                  <Table.Cell>
+                    <HStack gap="1">
+                        {game.platforms.map(p => (
+                            <Badge key={p} variant="outline" size="sm">{p}</Badge>
+                        ))}
+                    </HStack>
+                  </Table.Cell>
+                  <Table.Cell textAlign="end">{game.activePlayers.toLocaleString()}</Table.Cell>
+                  <Table.Cell textAlign="end">${(game.monthlyRevenue / 1000).toFixed(0)}k</Table.Cell>
+                  <Table.Cell>
+                    <Badge
+                      colorPalette={game.status === 'Live' ? 'green' : 'yellow'}
+                      variant="subtle"
+                    >
+                      {game.status}
+                    </Badge>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </Card.Body>
+      </Card.Root>
+    </Box>
   );
 }
