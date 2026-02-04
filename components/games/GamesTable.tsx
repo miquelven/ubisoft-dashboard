@@ -7,8 +7,9 @@ import {
   Table,
   Text,
   Box,
-  IconButton,
+  Link as ChakraLink,
 } from "@chakra-ui/react"
+import NextLink from "next/link"
 import { Game } from "@/services/gameService"
 import { FiArrowDown, FiArrowUp } from "react-icons/fi"
 
@@ -66,7 +67,11 @@ export const GamesTable = ({ games, sortConfig, onSort }: GamesTableProps) => {
         <Table.Body>
           {games.map((game) => (
             <Table.Row key={game.id}>
-              <Table.Cell fontWeight="medium">{game.name}</Table.Cell>
+              <Table.Cell fontWeight="medium">
+                <ChakraLink asChild color="blue.500" fontWeight="bold">
+                    <NextLink href={`/games/${game.id}`}>{game.name}</NextLink>
+                </ChakraLink>
+              </Table.Cell>
               <Table.Cell color="fg.muted">{game.franchise}</Table.Cell>
               <Table.Cell>
                 <HStack gap="1" wrap="wrap">

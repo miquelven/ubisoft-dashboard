@@ -28,6 +28,10 @@ export const getGames = () => {
   return mockData.games as Game[];
 };
 
+export const getGameById = (id: number) => {
+  return mockData.games.find((game) => game.id === id) as Game | undefined;
+};
+
 export const getFranchises = () => {
   const franchises = new Set(mockData.games.map((game) => game.franchise));
   return Array.from(franchises);
