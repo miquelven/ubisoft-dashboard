@@ -1,50 +1,256 @@
-{
-  "overview": {
-    "totalPlayers": 1250000,
-    "activeUsers": 85000,
-    "revenue": 450000.5
-  },
-  "games": [
-    {
-      "id": "1",
-      "name": "Assassin's Creed Mirage",
-      "platform": "Multiplatform",
-      "activePlayers": 45000,
-      "status": "Live"
-    },
-    {
-      "id": "2",
-      "name": "Rainbow Six Siege",
-      "platform": "PC",
-      "activePlayers": 120000,
-      "status": "Live"
-    },
-    {
-      "id": "3",
-      "name": "Far Cry 6",
-      "platform": "Console",
-      "activePlayers": 15000,
-      "status": "Maintenance"
-    }
-  ],
-  "recentActivity": [
-    {
-      "id": 101,
-      "user": "PlayerOne",
-      "action": "Login",
-      "timestamp": "2023-10-27T10:00:00Z"
-    },
-    {
-      "id": 102,
-      "user": "GamerX",
-      "action": "Purchase",
-      "timestamp": "2023-10-27T10:05:00Z"
-    },
-    {
-      "id": 103,
-      "user": "NoobMaster",
-      "action": "Logout",
-      "timestamp": "2023-10-27T10:15:00Z"
-    }
-  ]
-}
+{ 
+   "studio": { 
+     "name": "Ubisoft Montreal", 
+     "activeGames": 6, 
+     "dau": 75000, 
+     "mau": 450000, 
+     "monthlyRevenue": 10770000, 
+     "growth": 12.5 
+   }, 
+ 
+   "games": [ 
+     { 
+       "id": 1, 
+       "name": "Assassin's Creed Valhalla", 
+       "franchise": "Assassin's Creed", 
+       "genre": "RPG Open World", 
+       "platforms": ["PC", "PS5", "Xbox Series"], 
+       "status": "Live", 
+       "releaseDate": "2020-11-10", 
+       "price": 59.99, 
+       "rating": 8.1, 
+       "activePlayers": 12500, 
+       "monthlyRevenue": 2500000, 
+       "metrics": { 
+         "dau": 12500, 
+         "mau": 85000, 
+         "avgPlaytime": 3.2, 
+         "retention": 45, 
+         "revenueByPlatform": { 
+           "pc": 1200000, 
+           "console": 1300000 
+         } 
+       } 
+     }, 
+     { 
+       "id": 2, 
+       "name": "Watch Dogs Legion", 
+       "franchise": "Watch Dogs", 
+       "genre": "Action Open World", 
+       "platforms": ["PC", "PS5", "Xbox Series"], 
+       "status": "Live", 
+       "releaseDate": "2020-10-29", 
+       "price": 49.99, 
+       "rating": 7.4, 
+       "activePlayers": 4500, 
+       "monthlyRevenue": 850000, 
+       "metrics": { 
+         "dau": 4500, 
+         "mau": 32000, 
+         "avgPlaytime": 2.1, 
+         "retention": 38, 
+         "revenueByPlatform": { 
+           "pc": 400000, 
+           "console": 450000 
+         } 
+       } 
+     }, 
+     { 
+       "id": 3, 
+       "name": "Far Cry 6", 
+       "franchise": "Far Cry", 
+       "genre": "Action Open World", 
+       "platforms": ["PC", "PS5", "Xbox Series"], 
+       "status": "Live", 
+       "releaseDate": "2021-10-07", 
+       "price": 59.99, 
+       "rating": 7.8, 
+       "activePlayers": 9800, 
+       "monthlyRevenue": 1800000, 
+       "metrics": { 
+         "dau": 9800, 
+         "mau": 68000, 
+         "avgPlaytime": 2.8, 
+         "retention": 42, 
+         "revenueByPlatform": { 
+           "pc": 850000, 
+           "console": 950000 
+         } 
+       } 
+     }, 
+     { 
+       "id": 4, 
+       "name": "Rainbow Six Siege", 
+       "franchise": "Rainbow Six", 
+       "genre": "FPS", 
+       "platforms": ["PC", "PS5", "Xbox Series"], 
+       "status": "Live", 
+       "releaseDate": "2015-12-01", 
+       "price": 19.99, 
+       "rating": 8.2, 
+       "activePlayers": 45000, 
+       "monthlyRevenue": 4500000, 
+       "metrics": { 
+         "dau": 45000, 
+         "mau": 280000, 
+         "avgPlaytime": 4.5, 
+         "retention": 62, 
+         "revenueByPlatform": { 
+           "pc": 2200000, 
+           "console": 2300000 
+         } 
+       } 
+     }, 
+     { 
+       "id": 5, 
+       "name": "For Honor", 
+       "franchise": "For Honor", 
+       "genre": "Action Fighting", 
+       "platforms": ["PC", "PS5", "Xbox Series"], 
+       "status": "Live", 
+       "releaseDate": "2017-02-14", 
+       "price": 39.99, 
+       "rating": 7.6, 
+       "activePlayers": 3200, 
+       "monthlyRevenue": 620000, 
+       "metrics": { 
+         "dau": 3200, 
+         "mau": 22000, 
+         "avgPlaytime": 2.9, 
+         "retention": 40, 
+         "revenueByPlatform": { 
+           "pc": 300000, 
+           "console": 320000 
+         } 
+       } 
+     }, 
+     { 
+       "id": 6, 
+       "name": "Assassin's Creed Origins", 
+       "franchise": "Assassin's Creed", 
+       "genre": "RPG Open World", 
+       "platforms": ["PC", "PS4", "Xbox One"], 
+       "status": "Live", 
+       "releaseDate": "2017-10-27", 
+       "price": 19.99, 
+       "rating": 8.5, 
+       "activePlayers": 2800, 
+       "monthlyRevenue": 420000, 
+       "metrics": { 
+         "dau": 2800, 
+         "mau": 19000, 
+         "avgPlaytime": 2.4, 
+         "retention": 35, 
+         "revenueByPlatform": { 
+           "pc": 200000, 
+           "console": 220000 
+         } 
+       } 
+     } 
+   ], 
+ 
+   "players": [ 
+     { 
+       "id": 1, 
+       "nickname": "VikingKing42", 
+       "region": "NA", 
+       "platform": "PC", 
+       "type": "Hardcore", 
+       "favoriteGame": "Assassin's Creed Valhalla", 
+       "hoursPlayed": 450, 
+       "lastLogin": "2026-02-03" 
+     }, 
+     { 
+       "id": 2, 
+       "nickname": "HackerBR", 
+       "region": "LATAM", 
+       "platform": "PS5", 
+       "type": "Casual", 
+       "favoriteGame": "Watch Dogs Legion", 
+       "hoursPlayed": 120, 
+       "lastLogin": "2026-02-04" 
+     }, 
+     { 
+       "id": 3, 
+       "nickname": "FarCryFanatic", 
+       "region": "EU", 
+       "platform": "Xbox Series", 
+       "type": "Hardcore", 
+       "favoriteGame": "Far Cry 6", 
+       "hoursPlayed": 320, 
+       "lastLogin": "2026-02-02" 
+     }, 
+     { 
+       "id": 4, 
+       "nickname": "SiegePro", 
+       "region": "NA", 
+       "platform": "PC", 
+       "type": "Hardcore", 
+       "favoriteGame": "Rainbow Six Siege", 
+       "hoursPlayed": 2100, 
+       "lastLogin": "2026-02-04" 
+     }, 
+     { 
+       "id": 5, 
+       "nickname": "HonorKnight", 
+       "region": "EU", 
+       "platform": "PS5", 
+       "type": "Casual", 
+       "favoriteGame": "For Honor", 
+       "hoursPlayed": 85, 
+       "lastLogin": "2026-02-01" 
+     }, 
+     { 
+       "id": 6, 
+       "nickname": "EgyptExplorer", 
+       "region": "LATAM", 
+       "platform": "PC", 
+       "type": "Casual", 
+       "favoriteGame": "Assassin's Creed Origins", 
+       "hoursPlayed": 200, 
+       "lastLogin": "2026-02-03" 
+     } 
+   ], 
+ 
+   "analytics": { 
+     "dauLast7Days": [ 
+       { "date": "2026-01-29", "value": 65000 }, 
+       { "date": "2026-01-30", "value": 67000 }, 
+       { "date": "2026-01-31", "value": 69000 }, 
+       { "date": "2026-02-01", "value": 71000 }, 
+       { "date": "2026-02-02", "value": 72000 }, 
+       { "date": "2026-02-03", "value": 74000 }, 
+       { "date": "2026-02-04", "value": 75000 } 
+     ], 
+     "playersByRegion": { 
+       "NA": 180000, 
+       "EU": 150000, 
+       "LATAM": 120000 
+     }, 
+     "revenueLastMonths": [ 
+       { "month": "2025-12", "value": 8500000 }, 
+       { "month": "2026-01", "value": 9500000 }, 
+       { "month": "2026-02", "value": 10770000 } 
+     ] 
+   }, 
+ 
+   "studioStructure": { 
+     "teams": { 
+       "gameDesign": 3, 
+       "art": 4, 
+       "backend": 2, 
+       "liveOps": 5 
+     }, 
+     "projects": { 
+       "inDevelopment": 2, 
+       "live": 6, 
+       "archived": 10 
+     } 
+   }, 
+ 
+   "currentUser": { 
+     "name": "João Silva", 
+     "role": "Product Manager", 
+     "permission": "Admin" 
+   } 
+ }
