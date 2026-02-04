@@ -1,14 +1,28 @@
-"use client"
+'use client';
 
-import { Box, Heading, SimpleGrid, Text, Table, Badge, Card, Stack, HStack } from "@chakra-ui/react"
+import {
+  Box,
+  Heading,
+  SimpleGrid,
+  Text,
+  Table,
+  Badge,
+  Card,
+  Stack,
+  HStack,
+  Link as ChakraLink,
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
 import mockData from '../services/mockData.json';
-import { FiMonitor, FiSmartphone, FiBox } from "react-icons/fi"; // Using FiBox as generic console icon since specialized ones might need other imports
+import { FiMonitor, FiSmartphone, FiBox } from 'react-icons/fi'; // Using FiBox as generic console icon since specialized ones might need other imports
 
 export default function Home() {
   return (
     <Box>
       <Box mb="8">
-        <Heading size="2xl" mb="2">{mockData.studio.name}</Heading>
+        <Heading size="2xl" mb="2">
+          {mockData.studio.name}
+        </Heading>
         <Text color="fg.muted">Dashboard Overview</Text>
       </Box>
 
@@ -47,7 +61,9 @@ export default function Home() {
             <Text fontSize="4xl" fontWeight="bold" color="yellow.500">
               ${(mockData.studio.monthlyRevenue / 1000000).toFixed(1)}M
             </Text>
-            <Badge colorPalette="green" variant="surface">+{mockData.studio.growth}%</Badge>
+            <Badge colorPalette="green" variant="surface">
+              +{mockData.studio.growth}%
+            </Badge>
           </Card.Body>
         </Card.Root>
       </SimpleGrid>
@@ -64,8 +80,12 @@ export default function Home() {
                 <Table.ColumnHeader>Name</Table.ColumnHeader>
                 <Table.ColumnHeader>Genre</Table.ColumnHeader>
                 <Table.ColumnHeader>Platforms</Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">Active Players</Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">Monthly Revenue</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end">
+                  Active Players
+                </Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end">
+                  Monthly Revenue
+                </Table.ColumnHeader>
                 <Table.ColumnHeader>Status</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
@@ -74,20 +94,32 @@ export default function Home() {
                 <Table.Row key={game.id}>
                   <Table.Cell>
                     <Stack gap="0">
-                        <Text fontWeight="medium">{game.name}</Text>
-                        <Text fontSize="xs" color="fg.muted">{game.franchise}</Text>
+                      <ChakraLink asChild fontWeight="medium" color="blue.500">
+                        <NextLink href={`/games/${game.id}`}>
+                          {game.name}
+                        </NextLink>
+                      </ChakraLink>
+                      <Text fontSize="xs" color="fg.muted">
+                        {game.franchise}
+                      </Text>
                     </Stack>
                   </Table.Cell>
                   <Table.Cell color="fg.muted">{game.genre}</Table.Cell>
                   <Table.Cell>
                     <HStack gap="1">
-                        {game.platforms.map(p => (
-                            <Badge key={p} variant="outline" size="sm">{p}</Badge>
-                        ))}
+                      {game.platforms.map((p) => (
+                        <Badge key={p} variant="outline" size="sm">
+                          {p}
+                        </Badge>
+                      ))}
                     </HStack>
                   </Table.Cell>
-                  <Table.Cell textAlign="end">{game.activePlayers.toLocaleString('en-US')}</Table.Cell>
-                  <Table.Cell textAlign="end">${(game.monthlyRevenue / 1000).toFixed(0)}k</Table.Cell>
+                  <Table.Cell textAlign="end">
+                    {game.activePlayers.toLocaleString('en-US')}
+                  </Table.Cell>
+                  <Table.Cell textAlign="end">
+                    ${(game.monthlyRevenue / 1000).toFixed(0)}k
+                  </Table.Cell>
                   <Table.Cell>
                     <Badge
                       colorPalette={game.status === 'Live' ? 'green' : 'yellow'}

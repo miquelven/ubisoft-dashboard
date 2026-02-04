@@ -37,7 +37,9 @@ export const Sidebar = () => {
       
       <VStack gap="2" align="stretch">
         {LinkItems.map((link) => {
-          const isActive = pathname === link.href
+          const isActive = link.href === '/' 
+            ? pathname === '/' 
+            : pathname.startsWith(link.href)
           return (
             <Link
               key={link.name}
