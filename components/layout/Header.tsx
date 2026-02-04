@@ -9,7 +9,7 @@ export const Header = () => {
     <Flex
       as="header"
       w="full"
-      h="16"
+      h="20"
       alignItems="center"
       justifyContent="space-between"
       borderBottomWidth="1px"
@@ -19,10 +19,19 @@ export const Header = () => {
       pos="sticky"
       top="0"
       zIndex="sticky"
-      backdropFilter="blur(8px)"
+      backdropFilter="blur(12px)"
+      background="transparent"
+      _dark={{
+        bg: "blackAlpha.500",
+        borderColor: "whiteAlpha.100"
+      }}
+      _light={{
+        bg: "whiteAlpha.800",
+        borderColor: "gray.200"
+      }}
     >
-      <Text fontSize="lg" fontWeight="semibold" color="fg.muted">
-        Game Analytics Dashboard
+      <Text fontSize="xl" fontWeight="bold" letterSpacing="tight" color="fg.text">
+        DASHBOARD
       </Text>
       
       <HStack gap="4">
