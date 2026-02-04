@@ -36,3 +36,7 @@ export const getFranchises = () => {
   const franchises = new Set(mockData.games.map((game) => game.franchise));
   return Array.from(franchises);
 };
+
+export const getAnalyticsData = () => {
+  return mockData.analytics;
+};
