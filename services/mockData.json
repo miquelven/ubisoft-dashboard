@@ -1,0 +1,50 @@
+{
+  "overview": {
+    "totalPlayers": 1250000,
+    "activeUsers": 85000,
+    "revenue": 450000.5
+  },
+  "games": [
+    {
+      "id": "1",
+      "name": "Assassin's Creed Mirage",
+      "platform": "Multiplatform",
+      "activePlayers": 45000,
+      "status": "Live"
+    },
+    {
+      "id": "2",
+      "name": "Rainbow Six Siege",
+      "platform": "PC",
+      "activePlayers": 120000,
+      "status": "Live"
+    },
+    {
+      "id": "3",
+      "name": "Far Cry 6",
+      "platform": "Console",
+      "activePlayers": 15000,
+      "status": "Maintenance"
+    }
+  ],
+  "recentActivity": [
+    {
+      "id": 101,
+      "user": "PlayerOne",
+      "action": "Login",
+      "timestamp": "2023-10-27T10:00:00Z"
+    },
+    {
+      "id": 102,
+      "user": "GamerX",
+      "action": "Purchase",
+      "timestamp": "2023-10-27T10:05:00Z"
+    },
+    {
+      "id": 103,
+      "user": "NoobMaster",
+      "action": "Logout",
+      "timestamp": "2023-10-27T10:15:00Z"
+    }
+  ]
+}
