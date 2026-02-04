@@ -27,7 +27,7 @@ export default function Home() {
           <Card.Body>
             <Card.Title mb="2">Monthly Active Users</Card.Title>
             <Text fontSize="4xl" fontWeight="bold" color="blue.500">
-              {mockData.studio.mau.toLocaleString()}
+              {mockData.studio.mau.toLocaleString('en-US')}
             </Text>
           </Card.Body>
         </Card.Root>
@@ -36,7 +36,7 @@ export default function Home() {
           <Card.Body>
             <Card.Title mb="2">Daily Active Users</Card.Title>
             <Text fontSize="4xl" fontWeight="bold" color="green.500">
-              {mockData.studio.dau.toLocaleString()}
+              {mockData.studio.dau.toLocaleString('en-US')}
             </Text>
           </Card.Body>
         </Card.Root>
@@ -86,7 +86,7 @@ export default function Home() {
                         ))}
                     </HStack>
                   </Table.Cell>
-                  <Table.Cell textAlign="end">{game.activePlayers.toLocaleString()}</Table.Cell>
+                  <Table.Cell textAlign="end">{game.activePlayers.toLocaleString('en-US')}</Table.Cell>
                   <Table.Cell textAlign="end">${(game.monthlyRevenue / 1000).toFixed(0)}k</Table.Cell>
                   <Table.Cell>
                     <Badge

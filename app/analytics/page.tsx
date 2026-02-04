@@ -7,8 +7,9 @@ import {
   Card,
   HStack,
   Text,
+  Skeleton,
 } from "@chakra-ui/react"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import {
   BarChart,
   Bar,
@@ -47,6 +48,15 @@ export default function AnalyticsPage() {
   
   const [selectedPeriod, setSelectedPeriod] = useState("7");
   const [selectedGameId, setSelectedGameId] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        setIsLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const chartData = useMemo(() => {
     // If a specific game is selected, use its DAU as base, otherwise use Studio DAU
@@ -118,28 +128,32 @@ export default function AnalyticsPage() {
             </Card.Header>
             <Card.Body>
                 <Box h="400px" w="full">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                            <defs>
-                                <linearGradient id="colorDau" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-                                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                                </linearGradient>
-                                <linearGradient id="colorMau" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
-                                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                                </linearGradient>
-                            </defs>
-                            <XAxis dataKey="date" stroke="#888" fontSize={12} tickFormatter={(value) => value.slice(5)} />
-                            <YAxis stroke="#888" fontSize={12} />
-                            <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.1} />
-                            <Tooltip 
-                                contentStyle={{ backgroundColor: '#1f1f1f', border: 'none', borderRadius: '8px', color: '#fff' }}
-                            />
-                            <Area type="monotone" dataKey="mau" stroke="#10b981" fillOpacity={1} fill="url(#colorMau)" name="MAU" />
-                            <Area type="monotone" dataKey="value" stroke="#3b82f6" fillOpacity={1} fill="url(#colorDau)" name="DAU" />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    {isLoading ? (
+                        <Skeleton height="100%" width="100%" borderRadius="md" />
+                    ) : (
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                                <defs>
+                                    <linearGradient id="colorDau" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
+                                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                                    </linearGradient>
+                                    <linearGradient id="colorMau" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
+                                        <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                                    </linearGradient>
+                                </defs>
+                                <XAxis dataKey="date" stroke="#888" fontSize={12} tickFormatter={(value) => value.slice(5)} />
+                                <YAxis stroke="#888" fontSize={12} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.1} />
+                                <Tooltip 
+                                    contentStyle={{ backgroundColor: '#1f1f1f', border: 'none', borderRadius: '8px', color: '#fff' }}
+                                />
+                                <Area type="monotone" dataKey="mau" stroke="#10b981" fillOpacity={1} fill="url(#colorMau)" name="MAU" />
+                                <Area type="monotone" dataKey="value" stroke="#3b82f6" fillOpacity={1} fill="url(#colorDau)" name="DAU" />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    )}
                 </Box>
             </Card.Body>
         </Card.Root>
@@ -152,19 +166,23 @@ export default function AnalyticsPage() {
             </Card.Header>
             <Card.Body>
                 <Box h="300px" w="full">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={revenueData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.1} />
-                            <XAxis dataKey="month" stroke="#888" />
-                            <YAxis stroke="#888" />
-                            <Tooltip 
-                                cursor={{fill: 'transparent'}}
-                                formatter={(value: number) => `$${value.toLocaleString()}`}
-                                contentStyle={{ backgroundColor: '#1f1f1f', border: 'none', borderRadius: '8px', color: '#fff' }}
-                            />
-                            <Bar dataKey="value" fill="#f59e0b" radius={[4, 4, 0, 0]} name="Revenue" />
-                        </BarChart>
-                    </ResponsiveContainer>
+                    {isLoading ? (
+                        <Skeleton height="100%" width="100%" borderRadius="md" />
+                    ) : (
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={revenueData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.1} />
+                                <XAxis dataKey="month" stroke="#888" />
+                                <YAxis stroke="#888" />
+                                <Tooltip 
+                                    cursor={{fill: 'transparent'}}
+                                    formatter={(value: number) => `$${value.toLocaleString()}`}
+                                    contentStyle={{ backgroundColor: '#1f1f1f', border: 'none', borderRadius: '8px', color: '#fff' }}
+                                />
+                                <Bar dataKey="value" fill="#f59e0b" radius={[4, 4, 0, 0]} name="Revenue" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    )}
                 </Box>
             </Card.Body>
         </Card.Root>

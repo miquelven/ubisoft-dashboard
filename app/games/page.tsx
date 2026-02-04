@@ -1,7 +1,7 @@
 "use client"
 
 import { Box, Heading, Flex, Input, Stack } from "@chakra-ui/react"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { getGames, getFranchises, Game } from "@/services/gameService"
 import { GamesTable } from "@/components/games/GamesTable"
 import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
@@ -19,6 +19,15 @@ export default function GamesPage() {
     key: 'activePlayers',
     direction: 'desc'
   });
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate initial data loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSort = (key: keyof Game) => {
     let direction: 'asc' | 'desc' = 'asc';
@@ -106,6 +115,7 @@ export default function GamesPage() {
         games={filteredGames} 
         sortConfig={sortConfig} 
         onSort={handleSort} 
+        isLoading={isLoading}
       />
     </Box>
   )

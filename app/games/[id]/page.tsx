@@ -96,7 +96,7 @@ export default function GameDetailsPage() {
                     <Icon as={FiActivity} />
                     <Text fontWeight="medium">Daily Active Users</Text>
                 </HStack>
-                <Text fontSize="3xl" fontWeight="bold">{game.metrics.dau.toLocaleString()}</Text>
+                <Text fontSize="3xl" fontWeight="bold">{game.metrics.dau.toLocaleString('en-US')}</Text>
             </Card.Body>
         </Card.Root>
         <Card.Root>
@@ -105,7 +105,7 @@ export default function GameDetailsPage() {
                     <Icon as={FiUsers} />
                     <Text fontWeight="medium">Monthly Active Users</Text>
                 </HStack>
-                <Text fontSize="3xl" fontWeight="bold">{game.metrics.mau.toLocaleString()}</Text>
+                <Text fontSize="3xl" fontWeight="bold">{game.metrics.mau.toLocaleString('en-US')}</Text>
             </Card.Body>
         </Card.Root>
         <Card.Root>
