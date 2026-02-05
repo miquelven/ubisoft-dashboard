@@ -13,6 +13,7 @@ import NextLink from 'next/link';
 import { Game } from '@/services/gameService';
 import { FiArrowDown, FiArrowUp } from 'react-icons/fi';
 import { CustomEmptyState } from '@/components/ui/custom-empty-state';
+import { useSettings } from '@/components/ui/settings';
 
 interface GamesTableProps {
   games: Game[];
@@ -27,6 +28,7 @@ export const GamesTable = ({
   onSort,
   isLoading,
 }: GamesTableProps) => {
+  const { t } = useSettings();
   const getSortIcon = (key: keyof Game) => {
     if (sortConfig.key !== key) return null;
     return sortConfig.direction === 'asc' ? <FiArrowUp /> : <FiArrowDown />;
@@ -44,17 +46,17 @@ export const GamesTable = ({
         <Table.Root>
           <Table.Header bg="var(--surface)">
             <Table.Row>
-              <Table.ColumnHeader>Game</Table.ColumnHeader>
-              <Table.ColumnHeader>Franchise</Table.ColumnHeader>
-              <Table.ColumnHeader>Platforms</Table.ColumnHeader>
-              <Table.ColumnHeader>Status</Table.ColumnHeader>
+              <Table.ColumnHeader>{t('Game')}</Table.ColumnHeader>
+              <Table.ColumnHeader>{t('Franchise')}</Table.ColumnHeader>
+              <Table.ColumnHeader>{t('Platforms')}</Table.ColumnHeader>
+              <Table.ColumnHeader>{t('Status')}</Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">
-                Active Players
+                {t('Active Players')}
               </Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">
-                Revenue (Mo)
+                {t('Revenue (Mo)')}
               </Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">Rating</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">{t('Rating')}</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -106,19 +108,19 @@ export const GamesTable = ({
               _hover={{ bg: 'whiteAlpha.50' }}
             >
               <HStack gap="1">
-                <Text>Game</Text>
+                <Text>{t('Game')}</Text>
                 {getSortIcon('name')}
               </HStack>
             </Table.ColumnHeader>
-            <Table.ColumnHeader>Franchise</Table.ColumnHeader>
-            <Table.ColumnHeader>Platforms</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('Franchise')}</Table.ColumnHeader>
+            <Table.ColumnHeader>{t('Platforms')}</Table.ColumnHeader>
             <Table.ColumnHeader
               cursor="pointer"
               onClick={() => onSort('status')}
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1">
-                <Text>Status</Text>
+                <Text>{t('Status')}</Text>
                 {getSortIcon('status')}
               </HStack>
             </Table.ColumnHeader>
@@ -129,7 +131,7 @@ export const GamesTable = ({
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1" justify="flex-end">
-                <Text>Active Players</Text>
+                <Text>{t('Active Players')}</Text>
                 {getSortIcon('activePlayers')}
               </HStack>
             </Table.ColumnHeader>
@@ -140,7 +142,7 @@ export const GamesTable = ({
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1" justify="flex-end">
-                <Text>Revenue (Mo)</Text>
+                <Text>{t('Revenue (Mo)')}</Text>
                 {getSortIcon('monthlyRevenue')}
               </HStack>
             </Table.ColumnHeader>
@@ -151,7 +153,7 @@ export const GamesTable = ({
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1" justify="flex-end">
-                <Text>Rating</Text>
+                <Text>{t('Rating')}</Text>
                 {getSortIcon('rating')}
               </HStack>
             </Table.ColumnHeader>
@@ -169,7 +171,7 @@ export const GamesTable = ({
               <Table.Cell>
                 <HStack gap="1" wrap="wrap">
                   {game.platforms.map((p) => (
-                    <Badge key={p} variant="outline" size="sm">
+                    <Badge key={p} variant="surface" size="sm">
                       {p}
                     </Badge>
                   ))}
@@ -200,8 +202,8 @@ export const GamesTable = ({
             <Table.Row>
               <Table.Cell colSpan={7} py="12">
                 <CustomEmptyState
-                  title="No games found"
-                  description="Try adjusting your filters or search query."
+                  title={t('No games found')}
+                  description={t('Try adjusting your filters or search query.')}
                 />
               </Table.Cell>
             </Table.Row>
