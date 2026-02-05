@@ -3,8 +3,10 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { useSettings } from '@/components/ui/settings';
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
+  const { compactMode } = useSettings();
   return (
     <Flex
       minH="100vh"
@@ -20,7 +22,11 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         flexDirection="column"
       >
         <Header />
-        <Box as="main" flex="1" p={{ base: 4, md: 8 }}>
+        <Box
+          as="main"
+          flex="1"
+          p={compactMode ? { base: 2, md: 4 } : { base: 4, md: 8 }}
+        >
           {children}
         </Box>
       </Box>
