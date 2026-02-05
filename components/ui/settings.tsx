@@ -15,6 +15,7 @@ type SettingsContextValue = SettingsState & {
   setRefreshRate: (rate: number) => void
   setCompactMode: (value: boolean) => void
   t: (key: string) => string
+  formatNumber: (value: number) => string
 }
 
 const defaultState: SettingsState = {
@@ -251,15 +252,17 @@ const translations: Record<Language, Record<string, string>> = {
 const SettingsContext = React.createContext<SettingsContextValue | undefined>(undefined)
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = React.useState<SettingsState>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const raw = localStorage.getItem('ubisoft-dashboard:settings')
-        if (raw) return JSON.parse(raw) as SettingsState
-      } catch {}
-    }
-    return defaultState
-  })
+  const [state, setState] = React.useState<SettingsState>(defaultState)
+
+  React.useEffect(() => {
+    try {
+      const raw = localStorage.getItem('ubisoft-dashboard:settings')
+      if (raw) {
+        const parsed = JSON.parse(raw) as SettingsState
+        setState(parsed)
+      }
+    } catch {}
+  }, [])
 
   React.useEffect(() => {
     try {
@@ -278,6 +281,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     (key: string) => translations[state.language][key] ?? key,
     [state.language],
   )
+  const locale = state.language === 'pt' ? 'pt-BR' : state.language === 'es' ? 'es-ES' : 'en-US'
+  const formatNumber = React.useCallback(
+    (value: number) => new Intl.NumberFormat(locale).format(value),
+    [locale],
+  )
 
   const value: SettingsContextValue = {
     ...state,
@@ -285,6 +293,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setRefreshRate,
     setCompactMode,
     t,
+    formatNumber,
   }
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>

@@ -92,7 +92,7 @@ export const Sidebar = () => {
                       isActive ? 'var(--foreground)' : 'var(--text-secondary)'
                     }
                   />
-                  <Text>{t(link.name)}</Text>
+                  <Text suppressHydrationWarning>{t(link.name)}</Text>
                 </Flex>
               </NextLink>
             </Link>

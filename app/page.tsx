@@ -17,7 +17,7 @@ import mockData from '../services/mockData.json';
 import { useSettings } from '@/components/ui/settings';
 
 export default function Home() {
-  const { t } = useSettings();
+  const { t, compactMode, formatNumber } = useSettings();
   return (
     <Box>
       <Box mb="8">
@@ -106,37 +106,19 @@ export default function Home() {
         </Card.Header>
         <Card.Body>
           <Table.Root interactive>
-            <Table.Header>
+            <Table.Header borderBottomWidth="1px" borderColor="var(--border)">
               <Table.Row>
-                <Table.ColumnHeader color="var(--text-secondary)">
-                  {t('Name')}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader color="var(--text-secondary)">
-                  {t('Genre')}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader color="var(--text-secondary)">
-                  {t('Platforms')}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  textAlign="end"
-                  color="var(--text-secondary)"
-                >
-                  {t('Active Players')}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  textAlign="end"
-                  color="var(--text-secondary)"
-                >
-                  {t('Monthly Revenue')}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader color="var(--text-secondary)">
-                  {t('Status')}
-                </Table.ColumnHeader>
+                <Table.ColumnHeader color="var(--text-secondary)" textTransform="uppercase" letterSpacing="wide" fontSize="xs"> {t('Name')} </Table.ColumnHeader>
+                <Table.ColumnHeader color="var(--text-secondary)" textTransform="uppercase" letterSpacing="wide" fontSize="xs"> {t('Genre')} </Table.ColumnHeader>
+                <Table.ColumnHeader color="var(--text-secondary)" textTransform="uppercase" letterSpacing="wide" fontSize="xs"> {t('Platforms')} </Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end" color="var(--text-secondary)" textTransform="uppercase" letterSpacing="wide" fontSize="xs"> {t('Active Players')} </Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end" color="var(--text-secondary)" textTransform="uppercase" letterSpacing="wide" fontSize="xs"> {t('Monthly Revenue')} </Table.ColumnHeader>
+                <Table.ColumnHeader color="var(--text-secondary)" textTransform="uppercase" letterSpacing="wide" fontSize="xs"> {t('Status')} </Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {mockData.games.map((game) => (
-                <Table.Row key={game.id} _hover={{ bg: 'whiteAlpha.50' }}>
+                <Table.Row key={game.id} _hover={{ bg: 'whiteAlpha.50' }} borderBottomWidth="1px" borderColor="var(--border)" _last={{ borderBottomWidth: 0 }} _odd={{ bg: 'blackAlpha.50' }}>
                   <Table.Cell>
                     <Stack gap="0">
                       <ChakraLink
@@ -153,8 +135,8 @@ export default function Home() {
                       </Text>
                     </Stack>
                   </Table.Cell>
-                  <Table.Cell color="fg.muted">{game.genre}</Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell color="fg.muted" py={compactMode ? '2' : '3'}>{game.genre}</Table.Cell>
+                  <Table.Cell py={compactMode ? '2' : '3'}>
                     <HStack gap="1">
                       {game.platforms.map((p) => (
                       <Badge key={p} variant="surface" size="sm">
@@ -163,11 +145,11 @@ export default function Home() {
                       ))}
                     </HStack>
                   </Table.Cell>
-                  <Table.Cell textAlign="end">
-                    {game.activePlayers.toLocaleString('en-US')}
+                  <Table.Cell textAlign="end" py={compactMode ? '2' : '3'} suppressHydrationWarning>
+                    {formatNumber(game.activePlayers)}
                   </Table.Cell>
-                  <Table.Cell textAlign="end">
-                    ${(game.monthlyRevenue / 1000).toFixed(0)}k
+                  <Table.Cell textAlign="end" py={compactMode ? '2' : '3'} suppressHydrationWarning>
+                    ${formatNumber(game.monthlyRevenue / 1000)}k
                   </Table.Cell>
                   <Table.Cell>
                     <Badge

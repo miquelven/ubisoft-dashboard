@@ -28,7 +28,7 @@ export const GamesTable = ({
   onSort,
   isLoading,
 }: GamesTableProps) => {
-  const { t } = useSettings();
+  const { t, compactMode, formatNumber } = useSettings();
   const getSortIcon = (key: keyof Game) => {
     if (sortConfig.key !== key) return null;
     return sortConfig.direction === 'asc' ? <FiArrowUp /> : <FiArrowDown />;
@@ -36,32 +36,22 @@ export const GamesTable = ({
 
   if (isLoading) {
     return (
-      <Box
-        borderWidth="1px"
-        borderColor="var(--border)"
-        borderRadius="lg"
-        overflow="hidden"
-        bg="var(--surface)"
-      >
+      <Box borderWidth="1px" borderColor="var(--border)" borderRadius="xl" overflow="hidden" bg="var(--surface)" boxShadow="md">
         <Table.Root>
-          <Table.Header bg="var(--surface)">
+          <Table.Header bg="var(--surface)" borderBottomWidth="1px" borderColor="var(--border)">
             <Table.Row>
-              <Table.ColumnHeader>{t('Game')}</Table.ColumnHeader>
-              <Table.ColumnHeader>{t('Franchise')}</Table.ColumnHeader>
-              <Table.ColumnHeader>{t('Platforms')}</Table.ColumnHeader>
-              <Table.ColumnHeader>{t('Status')}</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">
-                {t('Active Players')}
-              </Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">
-                {t('Revenue (Mo)')}
-              </Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">{t('Rating')}</Table.ColumnHeader>
+              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Game')}</Table.ColumnHeader>
+              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Franchise')}</Table.ColumnHeader>
+              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Platforms')}</Table.ColumnHeader>
+              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Status')}</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end" textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Active Players')}</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end" textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Revenue (Mo)')}</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end" textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Rating')}</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {Array.from({ length: 5 }).map((_, i) => (
-              <Table.Row key={i}>
+              <Table.Row key={i} borderBottomWidth="1px" borderColor="var(--border)" _last={{ borderBottomWidth: 0 }}>
                 <Table.Cell>
                   <Skeleton height="20px" width="150px" />
                 </Table.Cell>
@@ -92,15 +82,9 @@ export const GamesTable = ({
   }
 
   return (
-    <Box
-      borderWidth="1px"
-      borderColor="var(--border)"
-      borderRadius="lg"
-      overflow="hidden"
-      bg="var(--surface)"
-    >
+    <Box borderWidth="1px" borderColor="var(--border)" borderRadius="xl" overflow="hidden" bg="var(--surface)" boxShadow="md">
       <Table.Root interactive>
-        <Table.Header bg="var(--surface)">
+        <Table.Header bg="var(--surface)" borderBottomWidth="1px" borderColor="var(--border)" position="sticky" top="0" zIndex="sticky">
           <Table.Row>
             <Table.ColumnHeader
               cursor="pointer"
@@ -108,19 +92,19 @@ export const GamesTable = ({
               _hover={{ bg: 'whiteAlpha.50' }}
             >
               <HStack gap="1">
-                <Text>{t('Game')}</Text>
+                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Game')}</Text>
                 {getSortIcon('name')}
               </HStack>
             </Table.ColumnHeader>
-            <Table.ColumnHeader>{t('Franchise')}</Table.ColumnHeader>
-            <Table.ColumnHeader>{t('Platforms')}</Table.ColumnHeader>
+            <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Franchise')}</Table.ColumnHeader>
+            <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Platforms')}</Table.ColumnHeader>
             <Table.ColumnHeader
               cursor="pointer"
               onClick={() => onSort('status')}
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1">
-                <Text>{t('Status')}</Text>
+                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Status')}</Text>
                 {getSortIcon('status')}
               </HStack>
             </Table.ColumnHeader>
@@ -131,7 +115,7 @@ export const GamesTable = ({
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1" justify="flex-end">
-                <Text>{t('Active Players')}</Text>
+                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Active Players')}</Text>
                 {getSortIcon('activePlayers')}
               </HStack>
             </Table.ColumnHeader>
@@ -142,7 +126,7 @@ export const GamesTable = ({
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1" justify="flex-end">
-                <Text>{t('Revenue (Mo)')}</Text>
+                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Revenue (Mo)')}</Text>
                 {getSortIcon('monthlyRevenue')}
               </HStack>
             </Table.ColumnHeader>
@@ -153,7 +137,7 @@ export const GamesTable = ({
               _hover={{ bg: 'bg.muted' }}
             >
               <HStack gap="1" justify="flex-end">
-                <Text>{t('Rating')}</Text>
+                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Rating')}</Text>
                 {getSortIcon('rating')}
               </HStack>
             </Table.ColumnHeader>
@@ -161,15 +145,15 @@ export const GamesTable = ({
         </Table.Header>
         <Table.Body>
           {games.map((game) => (
-            <Table.Row key={game.id} _hover={{ bg: 'bg.subtle' }}>
-              <Table.Cell fontWeight="medium">
-                <ChakraLink asChild color="blue.500" fontWeight="bold">
+            <Table.Row key={game.id} _hover={{ bg: 'whiteAlpha.50' }} borderBottomWidth="1px" borderColor="var(--border)" _last={{ borderBottomWidth: 0 }} _odd={{ bg: 'blackAlpha.50' }}>
+              <Table.Cell fontWeight="medium" py={compactMode ? '2' : '3'}>
+                <ChakraLink asChild color="var(--primary)" fontWeight="bold">
                   <NextLink href={`/games/${game.id}`}>{game.name}</NextLink>
                 </ChakraLink>
               </Table.Cell>
-              <Table.Cell color="fg.muted">{game.franchise}</Table.Cell>
-              <Table.Cell>
-                <HStack gap="1" wrap="wrap">
+              <Table.Cell color="fg.muted" py={compactMode ? '2' : '3'}>{game.franchise}</Table.Cell>
+              <Table.Cell py={compactMode ? '2' : '3'}>
+                <HStack gap="1.5" wrap="wrap">
                   {game.platforms.map((p) => (
                     <Badge key={p} variant="surface" size="sm">
                       {p}
@@ -177,7 +161,7 @@ export const GamesTable = ({
                   ))}
                 </HStack>
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell py={compactMode ? '2' : '3'}>
                 <Badge
                   colorPalette={game.status === 'Live' ? 'green' : 'yellow'}
                   variant="subtle"
@@ -185,13 +169,13 @@ export const GamesTable = ({
                   {game.status}
                 </Badge>
               </Table.Cell>
-              <Table.Cell textAlign="end" fontWeight="medium">
-                {game.activePlayers.toLocaleString('en-US')}
+              <Table.Cell textAlign="end" fontWeight="medium" py={compactMode ? '2' : '3'} suppressHydrationWarning>
+                {formatNumber(game.activePlayers)}
               </Table.Cell>
-              <Table.Cell textAlign="end" color="green.500">
-                ${(game.monthlyRevenue / 1000).toFixed(0)}k
+              <Table.Cell textAlign="end" color="green.500" py={compactMode ? '2' : '3'} suppressHydrationWarning>
+                ${formatNumber((game.monthlyRevenue / 1000))}k
               </Table.Cell>
-              <Table.Cell textAlign="end">
+              <Table.Cell textAlign="end" py={compactMode ? '2' : '3'}>
                 <Badge colorPalette={game.rating >= 8 ? 'green' : 'orange'}>
                   {game.rating}
                 </Badge>
