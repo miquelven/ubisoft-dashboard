@@ -30,9 +30,9 @@ export const Sidebar = () => {
       pos={{ base: 'relative', md: 'fixed' }}
       borderRightWidth={{ base: '0', md: '1px' }}
       borderBottomWidth={{ base: '1px', md: '0' }}
-      borderColor="whiteAlpha.100"
-      bg="#0B0C15" // Ubisoft-like dark background
-      color="white"
+      borderColor="var(--border)"
+      bg="var(--background)"
+      color="var(--foreground)"
       py="6"
       px="4"
     >
@@ -43,13 +43,13 @@ export const Sidebar = () => {
           h="8"
           borderRadius="full"
           bgGradient="to-tr"
-          gradientFrom="blue.500"
-          gradientTo="purple.600"
+          gradientFrom="var(--primary)"
+          gradientTo="var(--secondary)"
           mr="3"
         />
         <Text fontSize="2xl" fontWeight="bold" letterSpacing="tight">
           UBISOFT{' '}
-          <Text as="span" color="blue.500">
+          <Text as="span" color="var(--primary)">
             CONNECT
           </Text>
         </Text>
@@ -70,12 +70,14 @@ export const Sidebar = () => {
                   borderRadius="md"
                   role="group"
                   cursor="pointer"
-                  bg={isActive ? 'blue.600' : 'transparent'}
-                  color={isActive ? 'white' : 'gray.400'}
+                  bg={isActive ? 'var(--primary)' : 'transparent'}
+                  color={
+                    isActive ? 'var(--foreground)' : 'var(--text-secondary)'
+                  }
                   fontWeight={isActive ? 'bold' : 'medium'}
                   _hover={{
-                    bg: isActive ? 'blue.600' : 'whiteAlpha.100',
-                    color: 'white',
+                    bg: isActive ? 'var(--primary)' : 'whiteAlpha.100',
+                    color: 'var(--foreground)',
                     transform: 'translateX(4px)',
                   }}
                   transition="all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
@@ -84,7 +86,9 @@ export const Sidebar = () => {
                     as={link.icon}
                     mr="4"
                     fontSize="20"
-                    color={isActive ? 'white' : 'gray.500'}
+                    color={
+                      isActive ? 'var(--foreground)' : 'var(--text-secondary)'
+                    }
                   />
                   <Text>{link.name}</Text>
                 </Flex>

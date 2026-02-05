@@ -36,14 +36,12 @@ import {
   Legend,
 } from 'recharts';
 
-// Mock data generator for the chart since we don't have per-game history
 const generateMockHistory = (baseDau: number) => {
   const data = [];
   const today = new Date();
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
-    // Random fluctuation between -10% and +10%
     const fluctuation = 1 + (Math.random() * 0.2 - 0.1);
     data.push({
       date: date.toISOString().split('T')[0],
@@ -53,7 +51,7 @@ const generateMockHistory = (baseDau: number) => {
   return data;
 };
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#5B8CFF', '#22C55E', '#F97316', '#EC4899'];
 
 export default function GameDetailsPage() {
   const params = useParams();
@@ -96,12 +94,13 @@ export default function GameDetailsPage() {
         </ChakraLink>
       </Box>
 
-      {/* Header */}
       <Stack gap="4" mb="8">
         <HStack justify="space-between" wrap="wrap">
           <Stack gap="1">
             <HStack gap="3" align="center">
-              <Heading size="2xl">{game.name}</Heading>
+              <Heading size="2xl" color="var(--foreground)">
+                {game.name}
+              </Heading>
               <Badge
                 size="lg"
                 colorPalette={game.status === 'Live' ? 'green' : 'yellow'}
@@ -109,7 +108,7 @@ export default function GameDetailsPage() {
                 {game.status}
               </Badge>
             </HStack>
-            <Text color="fg.muted" fontSize="lg">
+            <Text color="var(--text-secondary)" fontSize="lg">
               {game.franchise} • {game.genre}
             </Text>
           </Stack>
@@ -124,60 +123,79 @@ export default function GameDetailsPage() {
         </HStack>
       </Stack>
 
-      {/* KPI Cards */}
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap="6" mb="8">
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <HStack mb="2" color="fg.muted">
+            <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiActivity} />
               <Text fontWeight="medium">Daily Active Users</Text>
             </HStack>
-            <Text fontSize="3xl" fontWeight="bold">
+            <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.dau.toLocaleString('en-US')}
             </Text>
           </Card.Body>
         </Card.Root>
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <HStack mb="2" color="fg.muted">
+            <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiUsers} />
               <Text fontWeight="medium">Monthly Active Users</Text>
             </HStack>
-            <Text fontSize="3xl" fontWeight="bold">
+            <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.mau.toLocaleString('en-US')}
             </Text>
           </Card.Body>
         </Card.Root>
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <HStack mb="2" color="fg.muted">
+            <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiClock} />
               <Text fontWeight="medium">Avg Playtime</Text>
             </HStack>
-            <Text fontSize="3xl" fontWeight="bold">
+            <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.avgPlaytime}h
             </Text>
           </Card.Body>
         </Card.Root>
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <HStack mb="2" color="fg.muted">
+            <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiDollarSign} />
               <Text fontWeight="medium">Retention (D30)</Text>
             </HStack>
-            <Text fontSize="3xl" fontWeight="bold">
+            <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.retention}%
             </Text>
           </Card.Body>
         </Card.Root>
       </SimpleGrid>
 
-      {/* Charts Section */}
       <SimpleGrid columns={{ base: 1, lg: 2 }} gap="6">
-        {/* Player Activity Chart */}
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md">Player Activity (Last 7 Days)</Heading>
+            <Heading size="md" color="var(--foreground)">
+              Player Activity (Last 7 Days)
+            </Heading>
           </Card.Header>
           <Card.Body>
             <Box h="300px" w="full">
@@ -185,28 +203,28 @@ export default function GameDetailsPage() {
                 <LineChart data={historyData}>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="#333"
-                    opacity={0.1}
+                    stroke="var(--border)"
+                    opacity={0.3}
                   />
                   <XAxis
                     dataKey="date"
-                    stroke="#888"
+                    stroke="var(--text-secondary)"
                     fontSize={12}
                     tickFormatter={(value) => value.slice(5)}
                   />
-                  <YAxis stroke="#888" fontSize={12} />
+                  <YAxis stroke="var(--text-secondary)" fontSize={12} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#1f1f1f',
-                      border: 'none',
+                      backgroundColor: 'var(--surface)',
+                      border: '1px solid var(--border)',
                       borderRadius: '8px',
-                      color: '#fff',
+                      color: 'var(--foreground)',
                     }}
                   />
                   <Line
                     type="monotone"
                     dataKey="value"
-                    stroke="#3b82f6"
+                    stroke="var(--chart-blue)"
                     strokeWidth={3}
                     dot={{ r: 4 }}
                     activeDot={{ r: 6 }}
@@ -217,10 +235,15 @@ export default function GameDetailsPage() {
           </Card.Body>
         </Card.Root>
 
-        {/* Revenue Chart */}
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md">Revenue by Platform</Heading>
+            <Heading size="md" color="var(--foreground)">
+              Revenue by Platform
+            </Heading>
           </Card.Header>
           <Card.Body>
             <Box h="300px" w="full">
@@ -248,10 +271,10 @@ export default function GameDetailsPage() {
                       value ? `$${value.toLocaleString()}` : ''
                     }
                     contentStyle={{
-                      backgroundColor: '#1f1f1f',
-                      border: 'none',
+                      backgroundColor: 'var(--surface)',
+                      border: '1px solid var(--border)',
                       borderRadius: '8px',
-                      color: '#fff',
+                      color: 'var(--foreground)',
                     }}
                   />
                   <Legend verticalAlign="bottom" height={36} />

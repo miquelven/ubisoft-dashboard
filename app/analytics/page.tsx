@@ -130,10 +130,10 @@ export default function AnalyticsPage() {
 
       <Stack gap="8">
         {/* Engagement Chart */}
-        <Card.Root>
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
           <Card.Header>
-            <Heading size="md">Engagement Trends (DAU vs MAU)</Heading>
-            <Text fontSize="sm" color="fg.muted">
+            <Heading size="md" color="var(--foreground)">Engagement Trends (DAU vs MAU)</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
               Daily vs Monthly Active Users ratio over time
             </Text>
           </Card.Header>
@@ -151,52 +151,52 @@ export default function AnalyticsPage() {
                       <linearGradient id="colorDau" x1="0" y1="0" x2="0" y2="1">
                         <stop
                           offset="5%"
-                          stopColor="#3b82f6"
+                          stopColor="var(--chart-blue)"
                           stopOpacity={0.8}
                         />
                         <stop
                           offset="95%"
-                          stopColor="#3b82f6"
+                          stopColor="var(--chart-blue)"
                           stopOpacity={0}
                         />
                       </linearGradient>
                       <linearGradient id="colorMau" x1="0" y1="0" x2="0" y2="1">
                         <stop
                           offset="5%"
-                          stopColor="#10b981"
+                          stopColor="var(--chart-green)"
                           stopOpacity={0.8}
                         />
                         <stop
                           offset="95%"
-                          stopColor="#10b981"
+                          stopColor="var(--chart-green)"
                           stopOpacity={0}
                         />
                       </linearGradient>
                     </defs>
                     <XAxis
                       dataKey="date"
-                      stroke="#888"
+                      stroke="var(--text-secondary)"
                       fontSize={12}
                       tickFormatter={(value) => value.slice(5)}
                     />
-                    <YAxis stroke="#888" fontSize={12} />
+                    <YAxis stroke="var(--text-secondary)" fontSize={12} />
                     <CartesianGrid
                       strokeDasharray="3 3"
-                      stroke="#333"
-                      opacity={0.1}
+                      stroke="var(--border)"
+                      opacity={0.3}
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#1f1f1f',
-                        border: 'none',
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
                         borderRadius: '8px',
-                        color: '#fff',
+                        color: 'var(--foreground)',
                       }}
                     />
                     <Area
                       type="monotone"
                       dataKey="mau"
-                      stroke="#10b981"
+                      stroke="var(--chart-green)"
                       fillOpacity={1}
                       fill="url(#colorMau)"
                       name="MAU"
@@ -204,7 +204,7 @@ export default function AnalyticsPage() {
                     <Area
                       type="monotone"
                       dataKey="value"
-                      stroke="#3b82f6"
+                      stroke="var(--chart-blue)"
                       fillOpacity={1}
                       fill="url(#colorDau)"
                       name="DAU"
@@ -217,10 +217,10 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* Revenue Chart */}
-        <Card.Root>
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
           <Card.Header>
-            <Heading size="md">Monthly Revenue</Heading>
-            <Text fontSize="sm" color="fg.muted">
+            <Heading size="md" color="var(--foreground)">Monthly Revenue</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
               Gross revenue generated over the last 3 months
             </Text>
           </Card.Header>
@@ -236,26 +236,26 @@ export default function AnalyticsPage() {
                   >
                     <CartesianGrid
                       strokeDasharray="3 3"
-                      stroke="#333"
-                      opacity={0.1}
+                      stroke="var(--border)"
+                      opacity={0.3}
                     />
-                    <XAxis dataKey="month" stroke="#888" />
-                    <YAxis stroke="#888" />
+                    <XAxis dataKey="month" stroke="var(--text-secondary)" />
+                    <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
                       cursor={{ fill: 'transparent' }}
                       formatter={(value: number | undefined) =>
                         value ? `$${value.toLocaleString()}` : ''
                       }
                       contentStyle={{
-                        backgroundColor: '#1f1f1f',
-                        border: 'none',
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
                         borderRadius: '8px',
-                        color: '#fff',
+                        color: 'var(--foreground)',
                       }}
                     />
                     <Bar
                       dataKey="value"
-                      fill="#f59e0b"
+                      fill="var(--chart-orange)"
                       radius={[4, 4, 0, 0]}
                       name="Revenue"
                     />

@@ -1,27 +1,40 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* User Palette */
+  --background: #0B0F1A; /* Background principal */
+  --surface: #131A2A;    /* Surface / Cards */
+  --border: #1E2A44;     /* Bordas / Dividers */
+  --foreground: #E6E9F0; /* Texto principal */
+  --text-secondary: #9AA4BF; /* Texto secundário */
+  
+  /* Accents */
+  --primary: #5B8CFF; /* Azul tech */
+  --secondary: #8B5CF6; /* Roxo moderno */
+  
+  /* Charts */
+  --chart-blue: #5B8CFF;
+  --chart-purple: #8B5CF6;
+  --chart-green: #22C55E;
+  --chart-orange: #F97316;
+  --chart-pink: #EC4899;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border-custom: var(--border);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #12141C; /* Ubisoft Dark Theme Background */
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%); /* Subtle blue glow at top */
+  background-image: radial-gradient(circle at 50% 0%, rgba(91, 140, 255, 0.08) 0%, transparent 50%);
 }

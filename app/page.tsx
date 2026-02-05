@@ -14,51 +14,74 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import mockData from '../services/mockData.json';
-import { FiMonitor, FiSmartphone, FiBox } from 'react-icons/fi'; // Using FiBox as generic console icon since specialized ones might need other imports
 
 export default function Home() {
   return (
     <Box>
       <Box mb="8">
-        <Heading size="2xl" mb="2">
+        <Heading size="2xl" mb="2" color="var(--foreground)">
           {mockData.studio.name}
         </Heading>
-        <Text color="fg.muted">Dashboard Overview</Text>
+        <Text color="var(--text-secondary)">Dashboard Overview</Text>
       </Box>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap="6" mb="8">
         {/* Overview Cards */}
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <Card.Title mb="2">Active Games</Card.Title>
-            <Text fontSize="4xl" fontWeight="bold" color="purple.500">
+            <Card.Title mb="2" color="var(--foreground)">
+              Active Games
+            </Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="var(--secondary)">
               {mockData.studio.activeGames}
             </Text>
           </Card.Body>
         </Card.Root>
 
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <Card.Title mb="2">Monthly Active Users</Card.Title>
-            <Text fontSize="4xl" fontWeight="bold" color="blue.500">
+            <Card.Title mb="2" color="var(--foreground)">
+              Monthly Active Users
+            </Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="var(--primary)">
               {mockData.studio.mau.toLocaleString('en-US')}
             </Text>
           </Card.Body>
         </Card.Root>
 
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <Card.Title mb="2">Daily Active Users</Card.Title>
-            <Text fontSize="4xl" fontWeight="bold" color="green.500">
+            <Card.Title mb="2" color="var(--foreground)">
+              Daily Active Users
+            </Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="var(--chart-green)">
               {mockData.studio.dau.toLocaleString('en-US')}
             </Text>
           </Card.Body>
         </Card.Root>
 
-        <Card.Root>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Body>
-            <Card.Title mb="2">Monthly Revenue</Card.Title>
-            <Text fontSize="4xl" fontWeight="bold" color="yellow.500">
+            <Card.Title mb="2" color="var(--foreground)">
+              Monthly Revenue
+            </Card.Title>
+            <Text fontSize="4xl" fontWeight="bold" color="var(--chart-orange)">
               ${(mockData.studio.monthlyRevenue / 1000000).toFixed(1)}M
             </Text>
             <Badge colorPalette="green" variant="surface">
@@ -69,32 +92,56 @@ export default function Home() {
       </SimpleGrid>
 
       {/* Games List */}
-      <Card.Root>
+      <Card.Root
+        bg="var(--surface)"
+        borderColor="var(--border)"
+        borderWidth="1px"
+      >
         <Card.Header>
-          <Heading size="md">Live Games Performance</Heading>
+          <Heading size="md" color="var(--foreground)">
+            Live Games Performance
+          </Heading>
         </Card.Header>
         <Card.Body>
           <Table.Root interactive>
             <Table.Header>
               <Table.Row>
-                <Table.ColumnHeader>Name</Table.ColumnHeader>
-                <Table.ColumnHeader>Genre</Table.ColumnHeader>
-                <Table.ColumnHeader>Platforms</Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">
+                <Table.ColumnHeader color="var(--text-secondary)">
+                  Name
+                </Table.ColumnHeader>
+                <Table.ColumnHeader color="var(--text-secondary)">
+                  Genre
+                </Table.ColumnHeader>
+                <Table.ColumnHeader color="var(--text-secondary)">
+                  Platforms
+                </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  textAlign="end"
+                  color="var(--text-secondary)"
+                >
                   Active Players
                 </Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">
+                <Table.ColumnHeader
+                  textAlign="end"
+                  color="var(--text-secondary)"
+                >
                   Monthly Revenue
                 </Table.ColumnHeader>
-                <Table.ColumnHeader>Status</Table.ColumnHeader>
+                <Table.ColumnHeader color="var(--text-secondary)">
+                  Status
+                </Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {mockData.games.map((game) => (
-                <Table.Row key={game.id}>
+                <Table.Row key={game.id} _hover={{ bg: 'whiteAlpha.50' }}>
                   <Table.Cell>
                     <Stack gap="0">
-                      <ChakraLink asChild fontWeight="medium" color="blue.500">
+                      <ChakraLink
+                        asChild
+                        fontWeight="medium"
+                        color="var(--primary)"
+                      >
                         <NextLink href={`/games/${game.id}`}>
                           {game.name}
                         </NextLink>
