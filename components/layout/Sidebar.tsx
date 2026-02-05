@@ -3,6 +3,7 @@
 import { Box, Flex, Icon, Link, Text, VStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSettings } from '@/components/ui/settings';
 import {
   FiBarChart2,
   FiGrid,
@@ -21,6 +22,7 @@ const LinkItems = [
 
 export const Sidebar = () => {
   const pathname = usePathname();
+  const { t, compactMode } = useSettings();
 
   return (
     <Box
@@ -66,7 +68,7 @@ export const Sidebar = () => {
               <NextLink href={link.href}>
                 <Flex
                   align="center"
-                  p="3"
+                  p={compactMode ? '2' : '3'}
                   borderRadius="md"
                   role="group"
                   cursor="pointer"
@@ -90,7 +92,7 @@ export const Sidebar = () => {
                       isActive ? 'var(--foreground)' : 'var(--text-secondary)'
                     }
                   />
-                  <Text>{link.name}</Text>
+                  <Text>{t(link.name)}</Text>
                 </Flex>
               </NextLink>
             </Link>
