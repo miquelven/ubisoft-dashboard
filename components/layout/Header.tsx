@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { Flex, HStack, Text, Box, Image } from '@chakra-ui/react';
-import mockData from '@/services/mockData.json';
-import { ColorModeButton } from '../ui/color-mode';
+import { Flex, HStack, Text, Box, Image } from "@chakra-ui/react";
+import mockData from "@/services/mockData.json";
+import { useSettings } from "@/components/ui/settings";
 
 export const Header = () => {
+  const { compactMode } = useSettings();
   return (
     <Flex
       as="header"
       w="full"
-      h="20"
+      h={compactMode ? '16' : '20'}
       alignItems="center"
       justifyContent="space-between"
       borderBottomWidth="1px"
@@ -26,17 +27,11 @@ export const Header = () => {
         borderColor: 'var(--border)',
       }}
     >
-      <Text
-        fontSize="xl"
-        fontWeight="bold"
-        letterSpacing="tight"
-        color="var(--foreground)"
-      >
-        DASHBOARD
+      <Text fontSize="xl" fontWeight="bold" letterSpacing="tight" color="var(--foreground)">
+        UBISOFT DASHBOARD
       </Text>
 
       <HStack gap="4">
-        <ColorModeButton />
         <HStack gap="3" borderLeftWidth="1px" pl="4" borderColor="border">
           <Box
             w="8"
