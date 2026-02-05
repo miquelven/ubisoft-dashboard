@@ -24,6 +24,17 @@ export interface Game {
   };
 }
 
+export interface Player {
+  id: number;
+  nickname: string;
+  region: string;
+  platform: string;
+  type: string;
+  favoriteGame: string;
+  hoursPlayed: number;
+  lastLogin: string;
+}
+
 export const getGames = () => {
   return mockData.games as Game[];
 };
@@ -39,4 +50,8 @@ export const getFranchises = () => {
 
 export const getAnalyticsData = () => {
   return mockData.analytics;
+};
+
+export const getPlayers = () => {
+  return mockData.players as Player[];
 };
