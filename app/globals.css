@@ -38,3 +38,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-image: radial-gradient(circle at 50% 0%, rgba(91, 140, 255, 0.08) 0%, transparent 50%);
 }
+
+/* Remove focus outlines/rings globally as requested */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+a:focus, button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+@keyframes ubisoft-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
