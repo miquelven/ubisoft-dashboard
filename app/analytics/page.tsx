@@ -26,6 +26,7 @@ import {
   NativeSelectField,
   NativeSelectRoot,
 } from '@/components/ui/native-select';
+import { useSettings } from '@/components/ui/settings';
 
 // Mock data generator for time periods
 const generateTimeSeriesData = (days: number, baseValue: number) => {
@@ -48,6 +49,7 @@ const generateTimeSeriesData = (days: number, baseValue: number) => {
 export default function AnalyticsPage() {
   const analytics = getAnalyticsData();
   const games = getGames();
+  const { t } = useSettings();
 
   const [selectedPeriod, setSelectedPeriod] = useState('7');
   const [selectedGameId, setSelectedGameId] = useState('all');
@@ -93,10 +95,10 @@ export default function AnalyticsPage() {
       <HStack justify="space-between" mb="8" wrap="wrap" gap="4">
         <Box>
           <Heading size="2xl" mb="2">
-            Analytics Overview
+            {t('Analytics Overview')}
           </Heading>
           <Text color="fg.muted">
-            Strategic insights and performance metrics
+            {t('Strategic insights and performance metrics')}
           </Text>
         </Box>
 
@@ -106,7 +108,7 @@ export default function AnalyticsPage() {
               value={selectedGameId}
               onChange={(e) => setSelectedGameId(e.target.value)}
             >
-              <option value="all">All Games</option>
+              <option value="all">{t('All Games')}</option>
               {games.map((game) => (
                 <option key={game.id} value={game.id}>
                   {game.name}
@@ -120,9 +122,9 @@ export default function AnalyticsPage() {
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value)}
             >
-              <option value="7">Last 7 Days</option>
-              <option value="30">Last 30 Days</option>
-              <option value="90">Last 90 Days</option>
+              <option value="7">{t('Last 7 Days')}</option>
+              <option value="30">{t('Last 30 Days')}</option>
+              <option value="90">{t('Last 90 Days')}</option>
             </NativeSelectField>
           </NativeSelectRoot>
         </HStack>
@@ -132,9 +134,9 @@ export default function AnalyticsPage() {
         {/* Engagement Chart */}
         <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">Engagement Trends (DAU vs MAU)</Heading>
+            <Heading size="md" color="var(--foreground)">{t('Engagement Trends (DAU vs MAU)')}</Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
-              Daily vs Monthly Active Users ratio over time
+              {t('Daily vs Monthly Active Users ratio over time')}
             </Text>
           </Card.Header>
           <Card.Body>
@@ -199,7 +201,7 @@ export default function AnalyticsPage() {
                       stroke="var(--chart-green)"
                       fillOpacity={1}
                       fill="url(#colorMau)"
-                      name="MAU"
+                      name={t('MAU')}
                     />
                     <Area
                       type="monotone"
@@ -207,7 +209,7 @@ export default function AnalyticsPage() {
                       stroke="var(--chart-blue)"
                       fillOpacity={1}
                       fill="url(#colorDau)"
-                      name="DAU"
+                      name={t('DAU')}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -219,9 +221,9 @@ export default function AnalyticsPage() {
         {/* Revenue Chart */}
         <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">Monthly Revenue</Heading>
+            <Heading size="md" color="var(--foreground)">{t('Monthly Revenue')}</Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
-              Gross revenue generated over the last 3 months
+              {t('Gross revenue generated over the last 3 months')}
             </Text>
           </Card.Header>
           <Card.Body>
@@ -257,7 +259,7 @@ export default function AnalyticsPage() {
                       dataKey="value"
                       fill="var(--chart-orange)"
                       radius={[4, 4, 0, 0]}
-                      name="Revenue"
+                      name={t('Revenue')}
                     />
                   </BarChart>
                 </ResponsiveContainer>

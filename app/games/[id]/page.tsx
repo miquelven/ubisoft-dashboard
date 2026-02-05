@@ -35,6 +35,7 @@ import {
   Cell,
   Legend,
 } from 'recharts';
+import { useSettings } from '@/components/ui/settings';
 
 const generateMockHistory = (baseDau: number) => {
   const data = [];
@@ -57,15 +58,16 @@ export default function GameDetailsPage() {
   const params = useParams();
   const id = Number(params.id);
   const game = getGameById(id);
+  const { t } = useSettings();
 
   if (!game) {
     return (
       <Box textAlign="center" py="20">
         <Heading size="lg" color="red.500">
-          Game not found
+          {t('Game not found')}
         </Heading>
         <Text color="fg.muted">
-          The game ID {id} does not exist in our database.
+          {t('The game ID')} {id} {t('does not exist in our database.')}
         </Text>
       </Box>
     );
@@ -73,8 +75,8 @@ export default function GameDetailsPage() {
 
   const historyData = generateMockHistory(game.metrics.dau);
   const revenueData = [
-    { name: 'PC', value: game.metrics.revenueByPlatform.pc },
-    { name: 'Console', value: game.metrics.revenueByPlatform.console },
+    { name: t('PC'), value: game.metrics.revenueByPlatform.pc },
+    { name: t('Console'), value: game.metrics.revenueByPlatform.console },
   ];
 
   return (
@@ -88,7 +90,7 @@ export default function GameDetailsPage() {
           <NextLink href="/games">
             <HStack gap="2">
               <Icon as={FiArrowLeft} />
-              <Text fontWeight="medium">Back to Games</Text>
+              <Text fontWeight="medium">{t('Back to Games')}</Text>
             </HStack>
           </NextLink>
         </ChakraLink>
@@ -114,10 +116,10 @@ export default function GameDetailsPage() {
           </Stack>
           <HStack>
             <Badge variant="surface" size="lg">
-              Release: {game.releaseDate}
+              {t('Release:')} {game.releaseDate}
             </Badge>
             <Badge variant="surface" size="lg" colorPalette="blue">
-              Rating: {game.rating}
+              {t('Rating:')} {game.rating}
             </Badge>
           </HStack>
         </HStack>
@@ -132,7 +134,7 @@ export default function GameDetailsPage() {
           <Card.Body>
             <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiActivity} />
-              <Text fontWeight="medium">Daily Active Users</Text>
+              <Text fontWeight="medium">{t('Daily Active Users')}</Text>
             </HStack>
             <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.dau.toLocaleString('en-US')}
@@ -147,7 +149,7 @@ export default function GameDetailsPage() {
           <Card.Body>
             <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiUsers} />
-              <Text fontWeight="medium">Monthly Active Users</Text>
+              <Text fontWeight="medium">{t('Monthly Active Users')}</Text>
             </HStack>
             <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.mau.toLocaleString('en-US')}
@@ -162,7 +164,7 @@ export default function GameDetailsPage() {
           <Card.Body>
             <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiClock} />
-              <Text fontWeight="medium">Avg Playtime</Text>
+              <Text fontWeight="medium">{t('Avg Playtime')}</Text>
             </HStack>
             <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.avgPlaytime}h
@@ -177,7 +179,7 @@ export default function GameDetailsPage() {
           <Card.Body>
             <HStack mb="2" color="var(--text-secondary)">
               <Icon as={FiDollarSign} />
-              <Text fontWeight="medium">Retention (D30)</Text>
+              <Text fontWeight="medium">{t('Retention (D30)')}</Text>
             </HStack>
             <Text fontSize="3xl" fontWeight="bold" color="var(--foreground)">
               {game.metrics.retention}%
@@ -194,7 +196,7 @@ export default function GameDetailsPage() {
         >
           <Card.Header>
             <Heading size="md" color="var(--foreground)">
-              Player Activity (Last 7 Days)
+              {t('Player Activity (Last 7 Days)')}
             </Heading>
           </Card.Header>
           <Card.Body>
@@ -220,6 +222,8 @@ export default function GameDetailsPage() {
                       borderRadius: '8px',
                       color: 'var(--foreground)',
                     }}
+                    labelStyle={{ color: 'var(--foreground)' }}
+                    itemStyle={{ color: 'var(--foreground)' }}
                   />
                   <Line
                     type="monotone"
@@ -228,6 +232,7 @@ export default function GameDetailsPage() {
                     strokeWidth={3}
                     dot={{ r: 4 }}
                     activeDot={{ r: 6 }}
+                    name={t('DAU')}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -242,7 +247,7 @@ export default function GameDetailsPage() {
         >
           <Card.Header>
             <Heading size="md" color="var(--foreground)">
-              Revenue by Platform
+              {t('Revenue by Platform')}
             </Heading>
           </Card.Header>
           <Card.Body>
@@ -276,8 +281,10 @@ export default function GameDetailsPage() {
                       borderRadius: '8px',
                       color: 'var(--foreground)',
                     }}
+                    labelStyle={{ color: 'var(--foreground)' }}
+                    itemStyle={{ color: 'var(--foreground)' }}
                   />
-                  <Legend verticalAlign="bottom" height={36} />
+                  <Legend verticalAlign="bottom" height={36} wrapperStyle={{ color: 'var(--foreground)' }} />
                 </PieChart>
               </ResponsiveContainer>
             </Box>

@@ -7,10 +7,12 @@ import { GamesTable } from "@/components/games/GamesTable"
 import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
 import { InputGroup } from "@/components/ui/input-group"
 import { FiSearch } from "react-icons/fi"
+import { useSettings } from "@/components/ui/settings"
 
 export default function GamesPage() {
   const allGames = getGames();
   const franchises = getFranchises();
+  const { t } = useSettings();
   
   const [search, setSearch] = useState("");
   const [selectedFranchise, setSelectedFranchise] = useState("");
@@ -74,13 +76,13 @@ export default function GamesPage() {
 
   return (
     <Box>
-      <Heading mb="6">Games Library</Heading>
+      <Heading mb="6">{t('Games')}</Heading>
 
       {/* Filters Toolbar */}
       <Stack direction={{ base: 'column', md: 'row' }} mb="6" gap="4">
         <InputGroup flex="1" startElement={<FiSearch />}>
             <Input 
-                placeholder="Search games..." 
+                placeholder={t('Search games...')} 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
@@ -88,7 +90,7 @@ export default function GamesPage() {
         
         <NativeSelectRoot width={{ base: 'full', md: '200px' }}>
             <NativeSelectField 
-                placeholder="All Franchises" 
+                placeholder={t('All Franchises')} 
                 value={selectedFranchise}
                 onChange={(e) => setSelectedFranchise(e.target.value)}
             >
@@ -100,12 +102,12 @@ export default function GamesPage() {
 
         <NativeSelectRoot width={{ base: 'full', md: '200px' }}>
             <NativeSelectField 
-                placeholder="All Status"
+                placeholder={t('All Status')}
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
             >
-                <option value="Live">Live</option>
-                <option value="Maintenance">Maintenance</option>
+                <option value="Live">{t('Live')}</option>
+                <option value="Maintenance">{t('Maintenance')}</option>
             </NativeSelectField>
         </NativeSelectRoot>
       </Stack>

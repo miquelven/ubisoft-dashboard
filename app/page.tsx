@@ -14,15 +14,17 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import mockData from '../services/mockData.json';
+import { useSettings } from '@/components/ui/settings';
 
 export default function Home() {
+  const { t } = useSettings();
   return (
     <Box>
       <Box mb="8">
         <Heading size="2xl" mb="2" color="var(--foreground)">
           {mockData.studio.name}
         </Heading>
-        <Text color="var(--text-secondary)">Dashboard Overview</Text>
+        <Text color="var(--text-secondary)">{t('Dashboard Overview')}</Text>
       </Box>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap="6" mb="8">
@@ -34,7 +36,7 @@ export default function Home() {
         >
           <Card.Body>
             <Card.Title mb="2" color="var(--foreground)">
-              Active Games
+              {t('Active Games')}
             </Card.Title>
             <Text fontSize="4xl" fontWeight="bold" color="var(--secondary)">
               {mockData.studio.activeGames}
@@ -49,7 +51,7 @@ export default function Home() {
         >
           <Card.Body>
             <Card.Title mb="2" color="var(--foreground)">
-              Monthly Active Users
+              {t('Monthly Active Users')}
             </Card.Title>
             <Text fontSize="4xl" fontWeight="bold" color="var(--primary)">
               {mockData.studio.mau.toLocaleString('en-US')}
@@ -64,7 +66,7 @@ export default function Home() {
         >
           <Card.Body>
             <Card.Title mb="2" color="var(--foreground)">
-              Daily Active Users
+              {t('Daily Active Users')}
             </Card.Title>
             <Text fontSize="4xl" fontWeight="bold" color="var(--chart-green)">
               {mockData.studio.dau.toLocaleString('en-US')}
@@ -79,7 +81,7 @@ export default function Home() {
         >
           <Card.Body>
             <Card.Title mb="2" color="var(--foreground)">
-              Monthly Revenue
+              {t('Monthly Revenue')}
             </Card.Title>
             <Text fontSize="4xl" fontWeight="bold" color="var(--chart-orange)">
               ${(mockData.studio.monthlyRevenue / 1000000).toFixed(1)}M
@@ -99,7 +101,7 @@ export default function Home() {
       >
         <Card.Header>
           <Heading size="md" color="var(--foreground)">
-            Live Games Performance
+            {t('Live Games Performance')}
           </Heading>
         </Card.Header>
         <Card.Body>
@@ -107,28 +109,28 @@ export default function Home() {
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeader color="var(--text-secondary)">
-                  Name
+                  {t('Name')}
                 </Table.ColumnHeader>
                 <Table.ColumnHeader color="var(--text-secondary)">
-                  Genre
+                  {t('Genre')}
                 </Table.ColumnHeader>
                 <Table.ColumnHeader color="var(--text-secondary)">
-                  Platforms
+                  {t('Platforms')}
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
                   textAlign="end"
                   color="var(--text-secondary)"
                 >
-                  Active Players
+                  {t('Active Players')}
                 </Table.ColumnHeader>
                 <Table.ColumnHeader
                   textAlign="end"
                   color="var(--text-secondary)"
                 >
-                  Monthly Revenue
+                  {t('Monthly Revenue')}
                 </Table.ColumnHeader>
                 <Table.ColumnHeader color="var(--text-secondary)">
-                  Status
+                  {t('Status')}
                 </Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
@@ -155,7 +157,7 @@ export default function Home() {
                   <Table.Cell>
                     <HStack gap="1">
                       {game.platforms.map((p) => (
-                        <Badge key={p} variant="outline" size="sm">
+                      <Badge key={p} variant="surface" size="sm">
                           {p}
                         </Badge>
                       ))}
