@@ -20,6 +20,12 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  LineChart,
+  Line,
 } from 'recharts';
 import { getAnalyticsData, getGames } from '@/services/gameService';
 import {
@@ -49,7 +55,7 @@ const generateTimeSeriesData = (days: number, baseValue: number) => {
 export default function AnalyticsPage() {
   const analytics = getAnalyticsData();
   const games = getGames();
-  const { t } = useSettings();
+  const { t, formatCurrencyFromUSD, formatCurrencyPreciseFromUSD, formatNumber } = useSettings();
 
   const [selectedPeriod, setSelectedPeriod] = useState('7');
   const [selectedGameId, setSelectedGameId] = useState('all');
@@ -246,7 +252,7 @@ export default function AnalyticsPage() {
                     <Tooltip
                       cursor={{ fill: 'transparent' }}
                       formatter={(value: number | undefined) =>
-                        value ? `$${value.toLocaleString()}` : ''
+                        value !== undefined ? formatCurrencyFromUSD(value) : ''
                       }
                       contentStyle={{
                         backgroundColor: 'var(--surface)',
@@ -261,6 +267,234 @@ export default function AnalyticsPage() {
                       radius={[4, 4, 0, 0]}
                       name={t('Revenue')}
                     />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        {/* DAU Last 30 Days */}
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('DAU Last 30 Days')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
+              {t('Daily active users trend over the last month')}
+            </Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="300px" w="full">
+              {isLoading ? (
+                <Skeleton height="100%" width="100%" borderRadius="md" />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={analytics.dauLast30Days}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <XAxis dataKey="date" stroke="var(--text-secondary)" fontSize={12} tickFormatter={(v) => v.slice(5)} />
+                    <YAxis stroke="var(--text-secondary)" fontSize={12} />
+                    <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }} />
+                    <Line type="monotone" dataKey="value" stroke="var(--primary)" strokeWidth={3} dot={{ r: 3 }} name={t('DAU')} />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        {/* Platform DAU Share */}
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('Platform DAU Share')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
+              {t('Distribution of DAU across platforms')}
+            </Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="300px" w="full">
+              {isLoading ? (
+                <Skeleton height="100%" width="100%" borderRadius="md" />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        { name: 'PC', value: analytics.platformDauShare.PC },
+                        { name: 'PS5', value: analytics.platformDauShare.PS5 },
+                        { name: 'Xbox Series', value: analytics.platformDauShare['Xbox Series'] },
+                      ]}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={70}
+                      outerRadius={110}
+                      paddingAngle={3}
+                      dataKey="value"
+                      nameKey="name"
+                      label
+                    >
+                      <Cell fill="var(--chart-blue)" />
+                      <Cell fill="var(--chart-orange)" />
+                      <Cell fill="var(--chart-green)" />
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px' }}
+                      labelStyle={{ color: 'var(--foreground)' }}
+                      itemStyle={{ color: 'var(--foreground)' }}
+                      formatter={((value: number | string, name: string) => [formatNumber(Number(value)), name]) as any}
+                    />
+                    <Legend wrapperStyle={{ color: 'var(--foreground)' }} />
+                  </PieChart>
+                </ResponsiveContainer>
+              )}
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        {/* Genre Distribution */}
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('Genre Distribution')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
+              {t('Count of games per genre')}
+            </Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="260px" w="full">
+              {isLoading ? (
+                <Skeleton height="100%" width="100%" borderRadius="md" />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={analytics.genreDistribution} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <XAxis dataKey="genre" stroke="var(--text-secondary)" fontSize={12} />
+                    <YAxis stroke="var(--text-secondary)" fontSize={12} />
+                    <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }} />
+                    <Bar dataKey="count" fill="var(--secondary)" radius={[4, 4, 0, 0]} name={t('Count')} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        {/* Revenue by Region */}
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('Revenue by Region')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
+              {t('Gross revenue distribution across regions')}
+            </Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="260px" w="full">
+              {isLoading ? (
+                <Skeleton height="100%" width="100%" borderRadius="md" />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={[
+                      { region: 'NA', value: analytics.revenueByRegion.NA },
+                      { region: 'EU', value: analytics.revenueByRegion.EU },
+                      { region: 'LATAM', value: analytics.revenueByRegion.LATAM },
+                    ]}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <XAxis dataKey="region" stroke="var(--text-secondary)" />
+                    <YAxis stroke="var(--text-secondary)" />
+                    <Tooltip
+                      formatter={(value: number | undefined) => (value !== undefined ? formatCurrencyPreciseFromUSD(value, 2) : '')}
+                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                    />
+                    <Bar dataKey="value" fill="var(--primary)" radius={[4, 4, 0, 0]} name={t('Revenue')} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        {/* ARPPU Last Months */}
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('ARPPU Last Months')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
+              {t('Average revenue per paying user')}
+            </Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="260px" w="full">
+              {isLoading ? (
+                <Skeleton height="100%" width="100%" borderRadius="md" />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={analytics.arppuLastMonths}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <XAxis dataKey="month" stroke="var(--text-secondary)" />
+                    <YAxis stroke="var(--text-secondary)" />
+                    <Tooltip
+                      formatter={(value: number | undefined) => (value !== undefined ? formatCurrencyFromUSD(value) : '')}
+                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                    />
+                    <Line type="monotone" dataKey="value" stroke="var(--chart-blue)" strokeWidth={3} dot={{ r: 3 }} name={t('ARPPU')} />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        {/* Conversion Funnel */}
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('Conversion Funnel')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
+              {t('Visits to paying users')}
+            </Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="240px" w="full">
+              {isLoading ? (
+                <Skeleton height="100%" width="100%" borderRadius="md" />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={analytics.conversionFunnel} layout="vertical" margin={{ left: 60 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <XAxis type="number" stroke="var(--text-secondary)" />
+                    <YAxis type="category" dataKey="stage" stroke="var(--text-secondary)" />
+                    <Tooltip
+                      formatter={(value: number | undefined) => (value ? value.toLocaleString() : '')}
+                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                    />
+                    <Bar dataKey="value" fill="var(--secondary)" radius={[4, 4, 4, 4]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        {/* Session Duration Distribution */}
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('Session Duration')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">
+              {t('Percentage of sessions by duration bucket')}
+            </Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="220px" w="full">
+              {isLoading ? (
+                <Skeleton height="100%" width="100%" borderRadius="md" />
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={analytics.sessionBuckets}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <XAxis dataKey="label" stroke="var(--text-secondary)" />
+                    <YAxis stroke="var(--text-secondary)" />
+                    <Tooltip
+                      formatter={(value: number | undefined) => (value !== undefined ? `${value}%` : '')}
+                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                    />
+                    <Bar dataKey="value" fill="var(--chart-green)" radius={[4, 4, 0, 0]} name={t('Percent')} />
                   </BarChart>
                 </ResponsiveContainer>
               )}
