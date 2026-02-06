@@ -195,8 +195,10 @@ export default function Home() {
                 <XAxis dataKey="month" hide />
                 <YAxis hide />
                 <Tooltip
-                  formatter={(v: number | undefined) =>
-                    v !== undefined ? formatCurrencyFromUSD(v) : ''
+                  formatter={(value) =>
+                    typeof value === 'number'
+                      ? formatCurrencyFromUSD(value)
+                      : ''
                   }
                   contentStyle={{
                     backgroundColor: 'var(--surface)',
@@ -229,131 +231,135 @@ export default function Home() {
           </Heading>
         </Card.Header>
         <Card.Body>
-          <Table.Root interactive>
-            <Table.Header borderBottomWidth="1px" borderColor="var(--border)">
-              <Table.Row>
-                <Table.ColumnHeader
-                  color="var(--text-secondary)"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                >
-                  {' '}
-                  {t('Name')}{' '}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  color="var(--text-secondary)"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                >
-                  {' '}
-                  {t('Genre')}{' '}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  color="var(--text-secondary)"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                >
-                  {' '}
-                  {t('Platforms')}{' '}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  textAlign="end"
-                  color="var(--text-secondary)"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                >
-                  {' '}
-                  {t('Active Players')}{' '}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  textAlign="end"
-                  color="var(--text-secondary)"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                >
-                  {' '}
-                  {t('Monthly Revenue')}{' '}
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  color="var(--text-secondary)"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                >
-                  {' '}
-                  {t('Status')}{' '}
-                </Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {mockData.games.map((game) => (
-                <Table.Row
-                  key={game.id}
-                  _hover={{ bg: 'whiteAlpha.50' }}
-                  borderBottomWidth="1px"
-                  borderColor="var(--border)"
-                  _last={{ borderBottomWidth: 0 }}
-                  _odd={{ bg: 'blackAlpha.50' }}
-                >
-                  <Table.Cell>
-                    <Stack gap="0">
-                      <ChakraLink
-                        asChild
-                        fontWeight="medium"
-                        color="var(--primary)"
-                      >
-                        <NextLink href={`/games/${game.id}`}>
-                          {game.name}
-                        </NextLink>
-                      </ChakraLink>
-                      <Text fontSize="xs" color="fg.muted">
-                        {game.franchise}
-                      </Text>
-                    </Stack>
-                  </Table.Cell>
-                  <Table.Cell color="fg.muted" py={compactMode ? '2' : '3'}>
-                    {game.genre}
-                  </Table.Cell>
-                  <Table.Cell py={compactMode ? '2' : '3'}>
-                    <HStack gap="1">
-                      {game.platforms.map((p) => (
-                        <Badge key={p} variant="surface" size="sm">
-                          {p}
-                        </Badge>
-                      ))}
-                    </HStack>
-                  </Table.Cell>
-                  <Table.Cell
-                    textAlign="end"
-                    py={compactMode ? '2' : '3'}
-                    suppressHydrationWarning
+          <Box overflowX="auto">
+            <Table.Root interactive>
+              <Table.Header borderBottomWidth="1px" borderColor="var(--border)">
+                <Table.Row>
+                  <Table.ColumnHeader
+                    color="var(--text-secondary)"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                    fontSize="xs"
                   >
-                    {formatNumber(game.activePlayers)}
-                  </Table.Cell>
-                  <Table.Cell
-                    textAlign="end"
-                    py={compactMode ? '2' : '3'}
-                    suppressHydrationWarning
+                    {' '}
+                    {t('Name')}{' '}
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    color="var(--text-secondary)"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                    fontSize="xs"
                   >
-                    {formatCurrencyFromUSD(game.monthlyRevenue)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Badge
-                      colorPalette={game.status === 'Live' ? 'green' : 'yellow'}
-                      variant="subtle"
-                    >
-                      {game.status}
-                    </Badge>
-                  </Table.Cell>
+                    {' '}
+                    {t('Genre')}{' '}
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    color="var(--text-secondary)"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                    fontSize="xs"
+                  >
+                    {' '}
+                    {t('Platforms')}{' '}
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    textAlign="end"
+                    color="var(--text-secondary)"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                    fontSize="xs"
+                  >
+                    {' '}
+                    {t('Active Players')}{' '}
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    textAlign="end"
+                    color="var(--text-secondary)"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                    fontSize="xs"
+                  >
+                    {' '}
+                    {t('Monthly Revenue')}{' '}
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    color="var(--text-secondary)"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                    fontSize="xs"
+                  >
+                    {' '}
+                    {t('Status')}{' '}
+                  </Table.ColumnHeader>
                 </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
+              </Table.Header>
+              <Table.Body>
+                {mockData.games.map((game) => (
+                  <Table.Row
+                    key={game.id}
+                    _hover={{ bg: 'whiteAlpha.50' }}
+                    borderBottomWidth="1px"
+                    borderColor="var(--border)"
+                    _last={{ borderBottomWidth: 0 }}
+                    _odd={{ bg: 'blackAlpha.50' }}
+                  >
+                    <Table.Cell>
+                      <Stack gap="0">
+                        <ChakraLink
+                          asChild
+                          fontWeight="medium"
+                          color="var(--primary)"
+                        >
+                          <NextLink href={`/games/${game.id}`}>
+                            {game.name}
+                          </NextLink>
+                        </ChakraLink>
+                        <Text fontSize="xs" color="fg.muted">
+                          {game.franchise}
+                        </Text>
+                      </Stack>
+                    </Table.Cell>
+                    <Table.Cell color="fg.muted" py={compactMode ? '2' : '3'}>
+                      {game.genre}
+                    </Table.Cell>
+                    <Table.Cell py={compactMode ? '2' : '3'}>
+                      <HStack gap="1">
+                        {game.platforms.map((p) => (
+                          <Badge key={p} variant="surface" size="sm">
+                            {p}
+                          </Badge>
+                        ))}
+                      </HStack>
+                    </Table.Cell>
+                    <Table.Cell
+                      textAlign="end"
+                      py={compactMode ? '2' : '3'}
+                      suppressHydrationWarning
+                    >
+                      {formatNumber(game.activePlayers)}
+                    </Table.Cell>
+                    <Table.Cell
+                      textAlign="end"
+                      py={compactMode ? '2' : '3'}
+                      suppressHydrationWarning
+                    >
+                      {formatCurrencyFromUSD(game.monthlyRevenue)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Badge
+                        colorPalette={
+                          game.status === 'Live' ? 'green' : 'yellow'
+                        }
+                        variant="subtle"
+                      >
+                        {game.status}
+                      </Badge>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Root>
+          </Box>
         </Card.Body>
       </Card.Root>
     </Box>
