@@ -11,13 +11,24 @@ import {
   Stack,
   HStack,
   Link as ChakraLink,
+  Icon,
 } from '@chakra-ui/react';
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from 'recharts';
+import { FiGrid, FiUsers, FiActivity, FiDollarSign, FiTrendingUp, FiTrendingDown } from 'react-icons/fi';
 import NextLink from 'next/link';
 import mockData from '../services/mockData.json';
 import { useSettings } from '@/components/ui/settings';
 
 export default function Home() {
-  const { t, compactMode, formatNumber } = useSettings();
+  const { t, compactMode, formatNumber, formatCurrencyFromUSD, formatCurrencyCompactFromUSD } = useSettings();
   return (
     <Box>
       <Box mb="8">
@@ -35,9 +46,10 @@ export default function Home() {
           borderWidth="1px"
         >
           <Card.Body>
-            <Card.Title mb="2" color="var(--foreground)">
-              {t('Active Games')}
-            </Card.Title>
+            <HStack mb="2" align="center" gap="2" color="var(--foreground)">
+              <Icon as={FiGrid} color="var(--secondary)" />
+              <Card.Title>{t('Active Games')}</Card.Title>
+            </HStack>
             <Text fontSize="4xl" fontWeight="bold" color="var(--secondary)">
               {mockData.studio.activeGames}
             </Text>
@@ -50,11 +62,12 @@ export default function Home() {
           borderWidth="1px"
         >
           <Card.Body>
-            <Card.Title mb="2" color="var(--foreground)">
-              {t('Monthly Active Users')}
-            </Card.Title>
+            <HStack mb="2" align="center" gap="2" color="var(--foreground)">
+              <Icon as={FiUsers} color="var(--primary)" />
+              <Card.Title>{t('Monthly Active Users')}</Card.Title>
+            </HStack>
             <Text fontSize="4xl" fontWeight="bold" color="var(--primary)">
-              {mockData.studio.mau.toLocaleString('en-US')}
+              {formatNumber(mockData.studio.mau)}
             </Text>
           </Card.Body>
         </Card.Root>
@@ -65,11 +78,12 @@ export default function Home() {
           borderWidth="1px"
         >
           <Card.Body>
-            <Card.Title mb="2" color="var(--foreground)">
-              {t('Daily Active Users')}
-            </Card.Title>
+            <HStack mb="2" align="center" gap="2" color="var(--foreground)">
+              <Icon as={FiActivity} color="var(--chart-green)" />
+              <Card.Title>{t('Daily Active Users')}</Card.Title>
+            </HStack>
             <Text fontSize="4xl" fontWeight="bold" color="var(--chart-green)">
-              {mockData.studio.dau.toLocaleString('en-US')}
+              {formatNumber(mockData.studio.dau)}
             </Text>
           </Card.Body>
         </Card.Root>
@@ -80,18 +94,70 @@ export default function Home() {
           borderWidth="1px"
         >
           <Card.Body>
-            <Card.Title mb="2" color="var(--foreground)">
-              {t('Monthly Revenue')}
-            </Card.Title>
+            <HStack mb="2" align="center" gap="2" color="var(--foreground)">
+              <Icon as={FiDollarSign} color="var(--chart-orange)" />
+              <Card.Title>{t('Monthly Revenue')}</Card.Title>
+            </HStack>
             <Text fontSize="4xl" fontWeight="bold" color="var(--chart-orange)">
-              ${(mockData.studio.monthlyRevenue / 1000000).toFixed(1)}M
+              {formatCurrencyCompactFromUSD(mockData.studio.monthlyRevenue)}
             </Text>
-            <Badge colorPalette="green" variant="surface">
-              +{mockData.studio.growth}%
-            </Badge>
+            <HStack mt="2" gap="2" align="center">
+              <Box
+                bg={mockData.studio.growth >= 0 ? 'green.700' : 'red.700'}
+                color="white"
+                px="3"
+                py="1.5"
+                borderRadius="md"
+                display="inline-flex"
+                alignItems="center"
+                gap="2"
+                boxShadow="sm"
+              >
+                <Icon
+                  as={mockData.studio.growth >= 0 ? FiTrendingUp : FiTrendingDown}
+                  color={mockData.studio.growth >= 0 ? 'green.300' : 'red.300'}
+                />
+                <Text fontWeight="semibold">{
+                  `${mockData.studio.growth >= 0 ? '+' : ''}${mockData.studio.growth}%`
+                }</Text>
+              </Box>
+            </HStack>
           </Card.Body>
         </Card.Root>
       </SimpleGrid>
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
+          <Card.Body>
+            <Card.Title mb="2" color="var(--foreground)">
+              {t('Revenue Trend')}
+            </Card.Title>
+            <Box h="100px" w="full">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={mockData.analytics.revenueLastMonths} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="revMini" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--chart-orange)" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="var(--chart-orange)" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.2} />
+                  <XAxis dataKey="month" hide />
+                  <YAxis hide />
+                  <Tooltip
+                    formatter={(v: number | undefined) => (v !== undefined ? formatCurrencyFromUSD(v) : '')}
+                    contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                  />
+                  <Area type="monotone" dataKey="value" stroke="var(--chart-orange)" fill="url(#revMini)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+
 
       {/* Games List */}
       <Card.Root
@@ -149,7 +215,7 @@ export default function Home() {
                     {formatNumber(game.activePlayers)}
                   </Table.Cell>
                   <Table.Cell textAlign="end" py={compactMode ? '2' : '3'} suppressHydrationWarning>
-                    ${formatNumber(game.monthlyRevenue / 1000)}k
+                    {formatCurrencyFromUSD(game.monthlyRevenue)}
                   </Table.Cell>
                   <Table.Cell>
                     <Badge
