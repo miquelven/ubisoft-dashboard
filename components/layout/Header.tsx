@@ -21,7 +21,7 @@ export const Header = () => {
       borderColor="var(--border)"
       bg="var(--surface)"
       px={{ base: 0, md: 8 }}
-      pl={{ base: 4, md: 0 }}
+      pl={{ base: 4, md: 8 }}
       pos="sticky"
       top="0"
       zIndex="sticky"
