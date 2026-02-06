@@ -222,6 +222,38 @@
        { "date": "2026-02-03", "value": 74000 }, 
        { "date": "2026-02-04", "value": 75000 } 
      ], 
+    "dauLast30Days": [
+      { "date": "2026-01-06", "value": 58000 },
+      { "date": "2026-01-07", "value": 58500 },
+      { "date": "2026-01-08", "value": 59000 },
+      { "date": "2026-01-09", "value": 60000 },
+      { "date": "2026-01-10", "value": 60500 },
+      { "date": "2026-01-11", "value": 61000 },
+      { "date": "2026-01-12", "value": 61500 },
+      { "date": "2026-01-13", "value": 62000 },
+      { "date": "2026-01-14", "value": 62500 },
+      { "date": "2026-01-15", "value": 63000 },
+      { "date": "2026-01-16", "value": 63500 },
+      { "date": "2026-01-17", "value": 64000 },
+      { "date": "2026-01-18", "value": 64500 },
+      { "date": "2026-01-19", "value": 65000 },
+      { "date": "2026-01-20", "value": 65500 },
+      { "date": "2026-01-21", "value": 66000 },
+      { "date": "2026-01-22", "value": 66500 },
+      { "date": "2026-01-23", "value": 67000 },
+      { "date": "2026-01-24", "value": 67500 },
+      { "date": "2026-01-25", "value": 68000 },
+      { "date": "2026-01-26", "value": 68500 },
+      { "date": "2026-01-27", "value": 69000 },
+      { "date": "2026-01-28", "value": 69500 },
+      { "date": "2026-01-29", "value": 70000 },
+      { "date": "2026-01-30", "value": 70500 },
+      { "date": "2026-01-31", "value": 71000 },
+      { "date": "2026-02-01", "value": 71500 },
+      { "date": "2026-02-02", "value": 72000 },
+      { "date": "2026-02-03", "value": 74000 },
+      { "date": "2026-02-04", "value": 75000 }
+    ],
      "playersByRegion": { 
        "NA": 180000, 
        "EU": 150000, 
@@ -231,7 +263,40 @@
        { "month": "2025-12", "value": 8500000 }, 
        { "month": "2026-01", "value": 9500000 }, 
        { "month": "2026-02", "value": 10770000 } 
-     ] 
+    ],
+    "platformDauShare": {
+      "PC": 32000,
+      "PS5": 25000,
+      "Xbox Series": 18000
+    },
+    "genreDistribution": [
+      { "genre": "RPG Open World", "count": 2 },
+      { "genre": "Action Open World", "count": 2 },
+      { "genre": "FPS", "count": 1 },
+      { "genre": "Action Fighting", "count": 1 }
+    ],
+    "revenueByRegion": {
+      "NA": 5200000,
+      "EU": 3800000,
+      "LATAM": 770000
+    },
+    "arppuLastMonths": [
+      { "month": "2025-12", "value": 18.2 },
+      { "month": "2026-01", "value": 19.5 },
+      { "month": "2026-02", "value": 21.0 }
+    ],
+    "conversionFunnel": [
+      { "stage": "Visits", "value": 2000000 },
+      { "stage": "Installs", "value": 800000 },
+      { "stage": "Active", "value": 450000 },
+      { "stage": "Paying", "value": 120000 }
+    ],
+    "sessionBuckets": [
+      { "label": "<15m", "value": 35 },
+      { "label": "15-30m", "value": 28 },
+      { "label": "30-60m", "value": 22 },
+      { "label": "60m+", "value": 15 }
+    ]
    }, 
  
    "studioStructure": { 

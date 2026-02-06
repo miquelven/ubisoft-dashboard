@@ -28,7 +28,7 @@ export const GamesTable = ({
   onSort,
   isLoading,
 }: GamesTableProps) => {
-  const { t, compactMode, formatNumber } = useSettings();
+  const { t, compactMode, formatNumber, formatCurrencyFromUSD } = useSettings();
   const getSortIcon = (key: keyof Game) => {
     if (sortConfig.key !== key) return null;
     return sortConfig.direction === 'asc' ? <FiArrowUp /> : <FiArrowDown />;
@@ -173,7 +173,7 @@ export const GamesTable = ({
                 {formatNumber(game.activePlayers)}
               </Table.Cell>
               <Table.Cell textAlign="end" color="green.500" py={compactMode ? '2' : '3'} suppressHydrationWarning>
-                ${formatNumber((game.monthlyRevenue / 1000))}k
+                {formatCurrencyFromUSD(game.monthlyRevenue)}
               </Table.Cell>
               <Table.Cell textAlign="end" py={compactMode ? '2' : '3'}>
                 <Badge colorPalette={game.rating >= 8 ? 'green' : 'orange'}>

@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Heading, Stack, Input } from "@chakra-ui/react"
+import { Box, Heading, Stack, Input, Card, HStack, Text } from "@chakra-ui/react"
 import { useEffect, useMemo, useState } from "react"
 import { getPlayers, type Player } from "@/services/gameService"
 import { PlayersTable } from "@/components/players/PlayersTable"
@@ -8,6 +8,7 @@ import { InputGroup } from "@/components/ui/input-group"
 import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select"
 import { FiSearch } from "react-icons/fi"
 import { useSettings } from "@/components/ui/settings"
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts"
 
 export default function PlayersPage() {
   const allPlayers = getPlayers()
@@ -85,6 +86,18 @@ export default function PlayersPage() {
     return filtered
   }, [allPlayers, search, selectedRegion, selectedPlatform, selectedType, sortConfig])
 
+  const regionDist = useMemo(() => {
+    const counts: Record<string, number> = {}
+    filteredPlayers.forEach(p => { counts[p.region] = (counts[p.region] || 0) + 1 })
+    return Object.entries(counts).map(([region, value]) => ({ region, value }))
+  }, [filteredPlayers])
+
+  const platformDist = useMemo(() => {
+    const counts: Record<string, number> = {}
+    filteredPlayers.forEach(p => { counts[p.platform] = (counts[p.platform] || 0) + 1 })
+    return Object.entries(counts).map(([platform, value]) => ({ platform, value }))
+  }, [filteredPlayers])
+
   return (
     <Box>
       <Heading mb="6">{t('Players')}</Heading>
@@ -130,6 +143,48 @@ export default function PlayersPage() {
             items={types}
           />
         </NativeSelectRoot>
+      </Stack>
+
+      <Stack gap="6" mb="6">
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('Players by Region')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">{t('Distribution of players by region')}</Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="260px">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={regionDist} dataKey="value" nameKey="region" cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={3} label>
+                    {regionDist.map((_, idx) => <Cell key={idx} fill={idx % 2 === 0 ? 'var(--chart-blue)' : 'var(--chart-green)'} />)}
+                  </Pie>
+                  <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }} />
+                  <Legend wrapperStyle={{ color: 'var(--foreground)' }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </Box>
+          </Card.Body>
+        </Card.Root>
+
+        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+          <Card.Header>
+            <Heading size="md" color="var(--foreground)">{t('Players by Platform')}</Heading>
+            <Text fontSize="sm" color="var(--text-secondary)">{t('Distribution of players by platform')}</Text>
+          </Card.Header>
+          <Card.Body>
+            <Box h="220px">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={platformDist}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                  <XAxis dataKey="platform" stroke="var(--text-secondary)" />
+                  <YAxis stroke="var(--text-secondary)" />
+                  <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }} />
+                  <Bar dataKey="value" fill="var(--secondary)" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </Box>
+          </Card.Body>
+        </Card.Root>
       </Stack>
 
       <PlayersTable

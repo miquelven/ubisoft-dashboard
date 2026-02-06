@@ -16,6 +16,12 @@ type SettingsContextValue = SettingsState & {
   setCompactMode: (value: boolean) => void
   t: (key: string) => string
   formatNumber: (value: number) => string
+  formatCurrency: (value: number) => string
+  formatCurrencyCompact: (value: number) => string
+  formatCurrencyPrecise: (value: number, fractionDigits?: number) => string
+  formatCurrencyFromUSD: (valueUSD: number) => string
+  formatCurrencyCompactFromUSD: (valueUSD: number) => string
+  formatCurrencyPreciseFromUSD: (valueUSD: number, fractionDigits?: number) => string
 }
 
 const defaultState: SettingsState = {
@@ -98,6 +104,27 @@ const translations: Record<Language, Record<string, string>> = {
     DAU: 'DAU',
     Revenue: 'Revenue',
     'Loading...': 'Loading...',
+    'DAU Last 30 Days': 'DAU Last 30 Days',
+    'Daily active users trend over the last month': 'Daily active users trend over the last month',
+    'Platform DAU Share': 'Platform DAU Share',
+    'Distribution of DAU across platforms': 'Distribution of DAU across platforms',
+    'Genre Distribution': 'Genre Distribution',
+    'Count of games per genre': 'Count of games per genre',
+    'Revenue by Region': 'Revenue by Region',
+    'Gross revenue distribution across regions': 'Gross revenue distribution across regions',
+    'ARPPU Last Months': 'ARPPU Last Months',
+    'Average revenue per paying user': 'Average revenue per paying user',
+    'Conversion Funnel': 'Conversion Funnel',
+    'Visits to paying users': 'Visits to paying users',
+    'Session Duration': 'Session Duration',
+    'Percentage of sessions by duration bucket': 'Percentage of sessions by duration bucket',
+    Percent: 'Percent',
+    Count: 'Count',
+    'Players by Region': 'Players by Region',
+    'Distribution of players by region': 'Distribution of players by region',
+    'Players by Platform': 'Players by Platform',
+    'Distribution of players by platform': 'Distribution of players by platform',
+    'Revenue Trend': 'Revenue Trend',
   },
   pt: {
     Dashboard: 'Painel',
@@ -172,6 +199,27 @@ const translations: Record<Language, Record<string, string>> = {
     DAU: 'DAU',
     Revenue: 'Receita',
     'Loading...': 'Carregando...',
+    'DAU Last 30 Days': 'DAU dos Últimos 30 Dias',
+    'Daily active users trend over the last month': 'Tendência de usuários ativos diários no último mês',
+    'Platform DAU Share': 'Participação de DAU por Plataforma',
+    'Distribution of DAU across platforms': 'Distribuição de DAU entre plataformas',
+    'Genre Distribution': 'Distribuição por Gênero',
+    'Count of games per genre': 'Quantidade de jogos por gênero',
+    'Revenue by Region': 'Receita por Região',
+    'Gross revenue distribution across regions': 'Distribuição da receita bruta por regiões',
+    'ARPPU Last Months': 'ARPPU dos Últimos Meses',
+    'Average revenue per paying user': 'Receita média por usuário pagante',
+    'Conversion Funnel': 'Funil de Conversão',
+    'Visits to paying users': 'Visitas até usuários pagantes',
+    'Session Duration': 'Duração de Sessões',
+    'Percentage of sessions by duration bucket': 'Percentual de sessões por faixa de duração',
+    Percent: 'Percentual',
+    Count: 'Quantidade',
+    'Players by Region': 'Jogadores por Região',
+    'Distribution of players by region': 'Distribuição de jogadores por região',
+    'Players by Platform': 'Jogadores por Plataforma',
+    'Distribution of players by platform': 'Distribuição de jogadores por plataforma',
+    'Revenue Trend': 'Tendência de Receita',
   },
   es: {
     Dashboard: 'Panel',
@@ -246,6 +294,27 @@ const translations: Record<Language, Record<string, string>> = {
     DAU: 'DAU',
     Revenue: 'Ingresos',
     'Loading...': 'Cargando...',
+    'DAU Last 30 Days': 'DAU de los Últimos 30 Días',
+    'Daily active users trend over the last month': 'Tendencia de usuarios activos diarios en el último mes',
+    'Platform DAU Share': 'Participación de DAU por Plataforma',
+    'Distribution of DAU across platforms': 'Distribución de DAU entre plataformas',
+    'Genre Distribution': 'Distribución por Género',
+    'Count of games per genre': 'Cantidad de juegos por género',
+    'Revenue by Region': 'Ingresos por Región',
+    'Gross revenue distribution across regions': 'Distribución de ingresos brutos por regiones',
+    'ARPPU Last Months': 'ARPPU de los Últimos Meses',
+    'Average revenue per paying user': 'Ingreso promedio por usuario de pago',
+    'Conversion Funnel': 'Embudo de Conversión',
+    'Visits to paying users': 'Visitas a usuarios de pago',
+    'Session Duration': 'Duración de Sesiones',
+    'Percentage of sessions by duration bucket': 'Porcentaje de sesiones por rango de duración',
+    Percent: 'Porcentaje',
+    Count: 'Cantidad',
+    'Players by Region': 'Jugadores por Región',
+    'Distribution of players by region': 'Distribución de jugadores por región',
+    'Players by Platform': 'Jugadores por Plataforma',
+    'Distribution of players by platform': 'Distribución de jugadores por plataforma',
+    'Revenue Trend': 'Tendencia de Ingresos',
   },
 }
 
@@ -282,10 +351,51 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     [state.language],
   )
   const locale = state.language === 'pt' ? 'pt-BR' : state.language === 'es' ? 'es-ES' : 'en-US'
+  const currency = state.language === 'pt' ? 'BRL' : state.language === 'es' ? 'EUR' : 'USD'
+  const exchangeRates: Record<'USD' | 'BRL' | 'EUR', number> = {
+    USD: 1,
+    BRL: 5.2,
+    EUR: 0.92,
+  }
+  const selectedRate = exchangeRates[currency as 'USD' | 'BRL' | 'EUR']
   const formatNumber = React.useCallback(
     (value: number) => new Intl.NumberFormat(locale).format(value),
     [locale],
   )
+  const formatCurrency = React.useCallback(
+    (value: number) =>
+      new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency,
+        maximumFractionDigits: 0,
+      }).format(value),
+    [locale, currency],
+  )
+  const formatCurrencyCompact = React.useCallback(
+    (value: number) =>
+      new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency,
+        notation: 'compact',
+        compactDisplay: 'short',
+        maximumFractionDigits: 1,
+      }).format(value),
+    [locale, currency],
+  )
+  const formatCurrencyPrecise = React.useCallback(
+    (value: number, fractionDigits: number = 2) =>
+      new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency,
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits,
+      }).format(value),
+    [locale, currency],
+  )
+  const convertUSD = React.useCallback((valueUSD: number) => valueUSD * selectedRate, [selectedRate])
+  const formatCurrencyFromUSD = React.useCallback((valueUSD: number) => formatCurrency(convertUSD(valueUSD)), [convertUSD, formatCurrency])
+  const formatCurrencyCompactFromUSD = React.useCallback((valueUSD: number) => formatCurrencyCompact(convertUSD(valueUSD)), [convertUSD, formatCurrencyCompact])
+  const formatCurrencyPreciseFromUSD = React.useCallback((valueUSD: number, fractionDigits: number = 2) => formatCurrencyPrecise(convertUSD(valueUSD), fractionDigits), [convertUSD, formatCurrencyPrecise])
 
   const value: SettingsContextValue = {
     ...state,
@@ -294,6 +404,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setCompactMode,
     t,
     formatNumber,
+    formatCurrency,
+    formatCurrencyCompact,
+    formatCurrencyPrecise,
+    formatCurrencyFromUSD,
+    formatCurrencyCompactFromUSD,
+    formatCurrencyPreciseFromUSD,
   }
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>
