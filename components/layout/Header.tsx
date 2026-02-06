@@ -5,6 +5,8 @@ import mockData from '@/services/mockData.json';
 import { useSettings } from '@/components/ui/settings';
 import { NativeSelectField, NativeSelectRoot } from '../ui/native-select';
 import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
+import NextLink from 'next/link';
+import Image from 'next/image';
 
 export const Header = () => {
   const { compactMode, language, setLanguage, t } = useSettings();
@@ -18,7 +20,8 @@ export const Header = () => {
       borderBottomWidth="1px"
       borderColor="var(--border)"
       bg="var(--surface)"
-      px="8"
+      px={{ base: 0, md: 8 }}
+      pl={{ base: 4, md: 0 }}
       pos="sticky"
       top="0"
       zIndex="sticky"
@@ -32,9 +35,15 @@ export const Header = () => {
         fontWeight="bold"
         letterSpacing="tight"
         color="var(--foreground)"
+        display={{ base: 'none', md: 'block' }}
       >
         UBISOFT DASHBOARD
       </Text>
+      <Flex display={{ base: 'block', md: 'none' }}>
+        <NextLink href="/">
+          <Image src="/logo.png" alt="logo" width={100} height={100} />
+        </NextLink>
+      </Flex>
 
       <HStack gap="4">
         <NativeSelectRoot width="120px">
@@ -48,7 +57,7 @@ export const Header = () => {
             <option value="es">ES</option>
           </NativeSelectField>
         </NativeSelectRoot>
-        
+
         <Menu.Root positioning={{ placement: 'bottom-end' }}>
           <Menu.Trigger asChild>
             <HStack
@@ -85,16 +94,31 @@ export const Header = () => {
           </Menu.Trigger>
           <Menu.Positioner>
             <Menu.Content bg="var(--surface)" borderColor="var(--border)">
-              <Menu.Item value="profile" gap="2" color="var(--foreground)" _hover={{ bg: 'var(--primary)', color: 'white' }}>
+              <Menu.Item
+                value="profile"
+                gap="2"
+                color="var(--foreground)"
+                _hover={{ bg: 'var(--primary)', color: 'white' }}
+              >
                 <Icon as={FiUser} />
                 {t('profile')}
               </Menu.Item>
-              <Menu.Item value="settings" gap="2" color="var(--foreground)" _hover={{ bg: 'var(--primary)', color: 'white' }}>
+              <Menu.Item
+                value="settings"
+                gap="2"
+                color="var(--foreground)"
+                _hover={{ bg: 'var(--primary)', color: 'white' }}
+              >
                 <Icon as={FiSettings} />
                 {t('settings')}
               </Menu.Item>
               <Menu.Separator borderColor="var(--border)" />
-              <Menu.Item value="logout" gap="2" color="red.500" _hover={{ bg: 'red.500', color: 'white' }}>
+              <Menu.Item
+                value="logout"
+                gap="2"
+                color="red.500"
+                _hover={{ bg: 'red.500', color: 'white' }}
+              >
                 <Icon as={FiLogOut} />
                 {t('logout')}
               </Menu.Item>

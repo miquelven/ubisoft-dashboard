@@ -38,6 +38,7 @@ export const Sidebar = () => {
       color="var(--foreground)"
       py="6"
       px="4"
+      display={{ base: 'none', md: 'block' }}
     >
       <Flex mb="10">
         <NextLink href="/">

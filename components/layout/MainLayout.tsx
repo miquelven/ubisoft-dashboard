@@ -4,6 +4,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useSettings } from '@/components/ui/settings';
+import { BottomNav } from './BottomNav';
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { compactMode } = useSettings();
@@ -20,6 +21,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         w={{ base: 'full', md: 'calc(100% - 16rem)' }}
         display="flex"
         flexDirection="column"
+        pb={{ base: '16', md: 0 }}
       >
         <Header />
         <Box
@@ -30,6 +32,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </Box>
       </Box>
+      <BottomNav />
     </Flex>
   );
 };
