@@ -58,7 +58,7 @@ export default function GameDetailsPage() {
   const params = useParams();
   const id = Number(params.id);
   const game = getGameById(id);
-  const { t } = useSettings();
+  const { t, formatCurrencyFromUSD } = useSettings();
 
   if (!game) {
     return (
@@ -273,7 +273,7 @@ export default function GameDetailsPage() {
                   </Pie>
                   <Tooltip
                     formatter={(value: number | undefined) =>
-                      value ? `$${value.toLocaleString()}` : ''
+                      value !== undefined ? formatCurrencyFromUSD(value) : ''
                     }
                     contentStyle={{
                       backgroundColor: 'var(--surface)',
