@@ -11,6 +11,7 @@ import {
   FiSettings,
   FiUsers,
 } from 'react-icons/fi';
+import Image from 'next/image';
 
 const LinkItems = [
   { name: 'Dashboard', icon: FiHome, href: '/' },
@@ -38,9 +39,9 @@ export const Sidebar = () => {
       py="6"
       px="4"
     >
-      <Flex h="14" mb="10">
+      <Flex mb="10">
         <NextLink href="/">
-          <img src="/logo.png" alt="logo" />
+          <Image src="/logo.png" alt="logo" width={160} height={160} />
         </NextLink>
       </Flex>
 

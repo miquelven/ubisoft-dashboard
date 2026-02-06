@@ -51,13 +51,16 @@ export const Header = () => {
         
         <Menu.Root positioning={{ placement: 'bottom-end' }}>
           <Menu.Trigger asChild>
-            <HStack 
-              gap="3" 
-              borderLeftWidth="1px" 
-              pl="4" 
-              borderColor="border" 
+            <HStack
+              gap="3"
+              borderLeftWidth="1px"
+              pl="4"
+              borderColor="border"
               cursor="pointer"
-              _hover={{ opacity: 0.8 }}
+              px="4"
+              py="2"
+              borderRadius="md"
+              _hover={{ bg: 'rgba(255, 255, 255, 0.03)' }}
             >
               <Flex
                 w="8"
@@ -84,16 +87,16 @@ export const Header = () => {
             <Menu.Content bg="var(--surface)" borderColor="var(--border)">
               <Menu.Item value="profile" gap="2" color="var(--foreground)" _hover={{ bg: 'var(--primary)', color: 'white' }}>
                 <Icon as={FiUser} />
-                {t('Profile')}
+                {t('profile')}
               </Menu.Item>
               <Menu.Item value="settings" gap="2" color="var(--foreground)" _hover={{ bg: 'var(--primary)', color: 'white' }}>
                 <Icon as={FiSettings} />
-                {t('Settings')}
+                {t('settings')}
               </Menu.Item>
               <Menu.Separator borderColor="var(--border)" />
               <Menu.Item value="logout" gap="2" color="red.500" _hover={{ bg: 'red.500', color: 'white' }}>
                 <Icon as={FiLogOut} />
-                {t('Logout')}
+                {t('logout')}
               </Menu.Item>
             </Menu.Content>
           </Menu.Positioner>

@@ -1,34 +1,37 @@
-'use client'
+'use client';
 
-import * as React from 'react'
+import * as React from 'react';
 
-type Language = 'en' | 'pt' | 'es'
+type Language = 'en' | 'pt' | 'es';
 
 type SettingsState = {
-  language: Language
-  refreshRate: number
-  compactMode: boolean
-}
+  language: Language;
+  refreshRate: number;
+  compactMode: boolean;
+};
 
 type SettingsContextValue = SettingsState & {
-  setLanguage: (lang: Language) => void
-  setRefreshRate: (rate: number) => void
-  setCompactMode: (value: boolean) => void
-  t: (key: string) => string
-  formatNumber: (value: number) => string
-  formatCurrency: (value: number) => string
-  formatCurrencyCompact: (value: number) => string
-  formatCurrencyPrecise: (value: number, fractionDigits?: number) => string
-  formatCurrencyFromUSD: (valueUSD: number) => string
-  formatCurrencyCompactFromUSD: (valueUSD: number) => string
-  formatCurrencyPreciseFromUSD: (valueUSD: number, fractionDigits?: number) => string
-}
+  setLanguage: (lang: Language) => void;
+  setRefreshRate: (rate: number) => void;
+  setCompactMode: (value: boolean) => void;
+  t: (key: string) => string;
+  formatNumber: (value: number) => string;
+  formatCurrency: (value: number) => string;
+  formatCurrencyCompact: (value: number) => string;
+  formatCurrencyPrecise: (value: number, fractionDigits?: number) => string;
+  formatCurrencyFromUSD: (valueUSD: number) => string;
+  formatCurrencyCompactFromUSD: (valueUSD: number) => string;
+  formatCurrencyPreciseFromUSD: (
+    valueUSD: number,
+    fractionDigits?: number
+  ) => string;
+};
 
 const defaultState: SettingsState = {
   language: 'en',
   refreshRate: 60,
   compactMode: false,
-}
+};
 
 const translations: Record<Language, Record<string, string>> = {
   en: {
@@ -68,7 +71,8 @@ const translations: Record<Language, Record<string, string>> = {
     'Revenue (Mo)': 'Revenue (Mo)',
     Rating: 'Rating',
     'No games found': 'No games found',
-    'Try adjusting your filters or search query.': 'Try adjusting your filters or search query.',
+    'Try adjusting your filters or search query.':
+      'Try adjusting your filters or search query.',
     'Search players by nickname...': 'Search players by nickname...',
     'All Regions': 'All Regions',
     'All Platforms': 'All Platforms',
@@ -82,14 +86,17 @@ const translations: Record<Language, Record<string, string>> = {
     'Last Login': 'Last Login',
     'No players found': 'No players found',
     'Analytics Overview': 'Analytics Overview',
-    'Strategic insights and performance metrics': 'Strategic insights and performance metrics',
+    'Strategic insights and performance metrics':
+      'Strategic insights and performance metrics',
     'All Games': 'All Games',
     'Last 7 Days': 'Last 7 Days',
     'Last 30 Days': 'Last 30 Days',
     'Last 90 Days': 'Last 90 Days',
     'Engagement Trends (DAU vs MAU)': 'Engagement Trends (DAU vs MAU)',
-    'Daily vs Monthly Active Users ratio over time': 'Daily vs Monthly Active Users ratio over time',
-    'Gross revenue generated over the last 3 months': 'Gross revenue generated over the last 3 months',
+    'Daily vs Monthly Active Users ratio over time':
+      'Daily vs Monthly Active Users ratio over time',
+    'Gross revenue generated over the last 3 months':
+      'Gross revenue generated over the last 3 months',
     'Back to Games': 'Back to Games',
     'Game not found': 'Game not found',
     'The game ID': 'The game ID',
@@ -105,25 +112,30 @@ const translations: Record<Language, Record<string, string>> = {
     Revenue: 'Revenue',
     'Loading...': 'Loading...',
     'DAU Last 30 Days': 'DAU Last 30 Days',
-    'Daily active users trend over the last month': 'Daily active users trend over the last month',
+    'Daily active users trend over the last month':
+      'Daily active users trend over the last month',
     'Platform DAU Share': 'Platform DAU Share',
-    'Distribution of DAU across platforms': 'Distribution of DAU across platforms',
+    'Distribution of DAU across platforms':
+      'Distribution of DAU across platforms',
     'Genre Distribution': 'Genre Distribution',
     'Count of games per genre': 'Count of games per genre',
     'Revenue by Region': 'Revenue by Region',
-    'Gross revenue distribution across regions': 'Gross revenue distribution across regions',
+    'Gross revenue distribution across regions':
+      'Gross revenue distribution across regions',
     'ARPPU Last Months': 'ARPPU Last Months',
     'Average revenue per paying user': 'Average revenue per paying user',
     'Conversion Funnel': 'Conversion Funnel',
     'Visits to paying users': 'Visits to paying users',
     'Session Duration': 'Session Duration',
-    'Percentage of sessions by duration bucket': 'Percentage of sessions by duration bucket',
+    'Percentage of sessions by duration bucket':
+      'Percentage of sessions by duration bucket',
     Percent: 'Percent',
     Count: 'Count',
     'Players by Region': 'Players by Region',
     'Distribution of players by region': 'Distribution of players by region',
     'Players by Platform': 'Players by Platform',
-    'Distribution of players by platform': 'Distribution of players by platform',
+    'Distribution of players by platform':
+      'Distribution of players by platform',
     'Revenue Trend': 'Revenue Trend',
   },
   pt: {
@@ -163,7 +175,8 @@ const translations: Record<Language, Record<string, string>> = {
     'Revenue (Mo)': 'Receita (Mês)',
     Rating: 'Avaliação',
     'No games found': 'Nenhum jogo encontrado',
-    'Try adjusting your filters or search query.': 'Tente ajustar seus filtros ou consulta.',
+    'Try adjusting your filters or search query.':
+      'Tente ajustar seus filtros ou consulta.',
     'Search players by nickname...': 'Pesquisar jogadores por apelido...',
     'All Regions': 'Todas as Regiões',
     'All Platforms': 'Todas as Plataformas',
@@ -177,14 +190,17 @@ const translations: Record<Language, Record<string, string>> = {
     'Last Login': 'Último Login',
     'No players found': 'Nenhum jogador encontrado',
     'Analytics Overview': 'Visão Geral de Análises',
-    'Strategic insights and performance metrics': 'Insights estratégicos e métricas de desempenho',
+    'Strategic insights and performance metrics':
+      'Insights estratégicos e métricas de desempenho',
     'All Games': 'Todos os Jogos',
     'Last 7 Days': 'Últimos 7 Dias',
     'Last 30 Days': 'Últimos 30 Dias',
     'Last 90 Days': 'Últimos 90 Dias',
     'Engagement Trends (DAU vs MAU)': 'Tendências de Engajamento (DAU vs MAU)',
-    'Daily vs Monthly Active Users ratio over time': 'Relação de Usuários Ativos Diários vs Mensais ao longo do tempo',
-    'Gross revenue generated over the last 3 months': 'Receita bruta gerada nos últimos 3 meses',
+    'Daily vs Monthly Active Users ratio over time':
+      'Relação de Usuários Ativos Diários vs Mensais ao longo do tempo',
+    'Gross revenue generated over the last 3 months':
+      'Receita bruta gerada nos últimos 3 meses',
     'Back to Games': 'Voltar para Jogos',
     'Game not found': 'Jogo não encontrado',
     'The game ID': 'O ID do jogo',
@@ -200,26 +216,34 @@ const translations: Record<Language, Record<string, string>> = {
     Revenue: 'Receita',
     'Loading...': 'Carregando...',
     'DAU Last 30 Days': 'DAU dos Últimos 30 Dias',
-    'Daily active users trend over the last month': 'Tendência de usuários ativos diários no último mês',
+    'Daily active users trend over the last month':
+      'Tendência de usuários ativos diários no último mês',
     'Platform DAU Share': 'Participação de DAU por Plataforma',
-    'Distribution of DAU across platforms': 'Distribuição de DAU entre plataformas',
+    'Distribution of DAU across platforms':
+      'Distribuição de DAU entre plataformas',
     'Genre Distribution': 'Distribuição por Gênero',
     'Count of games per genre': 'Quantidade de jogos por gênero',
     'Revenue by Region': 'Receita por Região',
-    'Gross revenue distribution across regions': 'Distribuição da receita bruta por regiões',
+    'Gross revenue distribution across regions':
+      'Distribuição da receita bruta por regiões',
     'ARPPU Last Months': 'ARPPU dos Últimos Meses',
     'Average revenue per paying user': 'Receita média por usuário pagante',
     'Conversion Funnel': 'Funil de Conversão',
     'Visits to paying users': 'Visitas até usuários pagantes',
     'Session Duration': 'Duração de Sessões',
-    'Percentage of sessions by duration bucket': 'Percentual de sessões por faixa de duração',
+    'Percentage of sessions by duration bucket':
+      'Percentual de sessões por faixa de duração',
     Percent: 'Percentual',
     Count: 'Quantidade',
     'Players by Region': 'Jogadores por Região',
     'Distribution of players by region': 'Distribuição de jogadores por região',
     'Players by Platform': 'Jogadores por Plataforma',
-    'Distribution of players by platform': 'Distribuição de jogadores por plataforma',
+    'Distribution of players by platform':
+      'Distribuição de jogadores por plataforma',
     'Revenue Trend': 'Tendência de Receita',
+    profile: 'Perfil',
+    settings: 'Configurações',
+    logout: 'Sair',
   },
   es: {
     Dashboard: 'Panel',
@@ -258,7 +282,8 @@ const translations: Record<Language, Record<string, string>> = {
     'Revenue (Mo)': 'Ingresos (Mes)',
     Rating: 'Valoración',
     'No games found': 'No se encontraron juegos',
-    'Try adjusting your filters or search query.': 'Intente ajustar sus filtros o consulta.',
+    'Try adjusting your filters or search query.':
+      'Intente ajustar sus filtros o consulta.',
     'Search players by nickname...': 'Buscar jugadores por apodo...',
     'All Regions': 'Todas las Regiones',
     'All Platforms': 'Todas las Plataformas',
@@ -272,14 +297,18 @@ const translations: Record<Language, Record<string, string>> = {
     'Last Login': 'Último Acceso',
     'No players found': 'No se encontraron jugadores',
     'Analytics Overview': 'Resumen Analítico',
-    'Strategic insights and performance metrics': 'Información estratégica y métricas de rendimiento',
+    'Strategic insights and performance metrics':
+      'Información estratégica y métricas de rendimiento',
     'All Games': 'Todos los Juegos',
     'Last 7 Days': 'Últimos 7 Días',
     'Last 30 Days': 'Últimos 30 Días',
     'Last 90 Days': 'Últimos 90 Días',
-    'Engagement Trends (DAU vs MAU)': 'Tendencias de Participación (DAU vs MAU)',
-    'Daily vs Monthly Active Users ratio over time': 'Relación de Usuarios Activos Diarios vs Mensuales a lo largo del tiempo',
-    'Gross revenue generated over the last 3 months': 'Ingresos brutos generados en los últimos 3 meses',
+    'Engagement Trends (DAU vs MAU)':
+      'Tendencias de Participación (DAU vs MAU)',
+    'Daily vs Monthly Active Users ratio over time':
+      'Relación de Usuarios Activos Diarios vs Mensuales a lo largo del tiempo',
+    'Gross revenue generated over the last 3 months':
+      'Ingresos brutos generados en los últimos 3 meses',
     'Back to Games': 'Volver a Juegos',
     'Game not found': 'Juego no encontrado',
     'The game ID': 'El ID del juego',
@@ -295,73 +324,89 @@ const translations: Record<Language, Record<string, string>> = {
     Revenue: 'Ingresos',
     'Loading...': 'Cargando...',
     'DAU Last 30 Days': 'DAU de los Últimos 30 Días',
-    'Daily active users trend over the last month': 'Tendencia de usuarios activos diarios en el último mes',
+    'Daily active users trend over the last month':
+      'Tendencia de usuarios activos diarios en el último mes',
     'Platform DAU Share': 'Participación de DAU por Plataforma',
-    'Distribution of DAU across platforms': 'Distribución de DAU entre plataformas',
+    'Distribution of DAU across platforms':
+      'Distribución de DAU entre plataformas',
     'Genre Distribution': 'Distribución por Género',
     'Count of games per genre': 'Cantidad de juegos por género',
     'Revenue by Region': 'Ingresos por Región',
-    'Gross revenue distribution across regions': 'Distribución de ingresos brutos por regiones',
+    'Gross revenue distribution across regions':
+      'Distribución de ingresos brutos por regiones',
     'ARPPU Last Months': 'ARPPU de los Últimos Meses',
     'Average revenue per paying user': 'Ingreso promedio por usuario de pago',
     'Conversion Funnel': 'Embudo de Conversión',
     'Visits to paying users': 'Visitas a usuarios de pago',
     'Session Duration': 'Duración de Sesiones',
-    'Percentage of sessions by duration bucket': 'Porcentaje de sesiones por rango de duración',
+    'Percentage of sessions by duration bucket':
+      'Porcentaje de sesiones por rango de duración',
     Percent: 'Porcentaje',
     Count: 'Cantidad',
     'Players by Region': 'Jugadores por Región',
     'Distribution of players by region': 'Distribución de jugadores por región',
     'Players by Platform': 'Jugadores por Plataforma',
-    'Distribution of players by platform': 'Distribución de jugadores por plataforma',
+    'Distribution of players by platform':
+      'Distribución de jugadores por plataforma',
     'Revenue Trend': 'Tendencia de Ingresos',
+    profile: 'Perfil',
+    settings: 'Ajustes',
+    logout: 'Cerrar Sesión',
   },
-}
+};
 
-const SettingsContext = React.createContext<SettingsContextValue | undefined>(undefined)
+const SettingsContext = React.createContext<SettingsContextValue | undefined>(
+  undefined
+);
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = React.useState<SettingsState>(defaultState)
+  const [state, setState] = React.useState<SettingsState>(defaultState);
 
   React.useEffect(() => {
     try {
-      const raw = localStorage.getItem('ubisoft-dashboard:settings')
+      const raw = localStorage.getItem('ubisoft-dashboard:settings');
       if (raw) {
-        const parsed = JSON.parse(raw) as SettingsState
-        setState(parsed)
+        const parsed = JSON.parse(raw) as SettingsState;
+        setState(parsed);
       }
     } catch {}
-  }, [])
+  }, []);
 
   React.useEffect(() => {
     try {
-      localStorage.setItem('ubisoft-dashboard:settings', JSON.stringify(state))
+      localStorage.setItem('ubisoft-dashboard:settings', JSON.stringify(state));
     } catch {}
-  }, [state])
+  }, [state]);
 
   const setLanguage = (language: Language) =>
-    setState((s) => ({ ...s, language }))
+    setState((s) => ({ ...s, language }));
   const setRefreshRate = (refreshRate: number) =>
-    setState((s) => ({ ...s, refreshRate }))
+    setState((s) => ({ ...s, refreshRate }));
   const setCompactMode = (compactMode: boolean) =>
-    setState((s) => ({ ...s, compactMode }))
+    setState((s) => ({ ...s, compactMode }));
 
   const t = React.useCallback(
     (key: string) => translations[state.language][key] ?? key,
-    [state.language],
-  )
-  const locale = state.language === 'pt' ? 'pt-BR' : state.language === 'es' ? 'es-ES' : 'en-US'
-  const currency = state.language === 'pt' ? 'BRL' : state.language === 'es' ? 'EUR' : 'USD'
+    [state.language]
+  );
+  const locale =
+    state.language === 'pt'
+      ? 'pt-BR'
+      : state.language === 'es'
+        ? 'es-ES'
+        : 'en-US';
+  const currency =
+    state.language === 'pt' ? 'BRL' : state.language === 'es' ? 'EUR' : 'USD';
   const exchangeRates: Record<'USD' | 'BRL' | 'EUR', number> = {
     USD: 1,
     BRL: 5.2,
     EUR: 0.92,
-  }
-  const selectedRate = exchangeRates[currency as 'USD' | 'BRL' | 'EUR']
+  };
+  const selectedRate = exchangeRates[currency as 'USD' | 'BRL' | 'EUR'];
   const formatNumber = React.useCallback(
     (value: number) => new Intl.NumberFormat(locale).format(value),
-    [locale],
-  )
+    [locale]
+  );
   const formatCurrency = React.useCallback(
     (value: number) =>
       new Intl.NumberFormat(locale, {
@@ -369,8 +414,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         currency,
         maximumFractionDigits: 0,
       }).format(value),
-    [locale, currency],
-  )
+    [locale, currency]
+  );
   const formatCurrencyCompact = React.useCallback(
     (value: number) =>
       new Intl.NumberFormat(locale, {
@@ -380,8 +425,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         compactDisplay: 'short',
         maximumFractionDigits: 1,
       }).format(value),
-    [locale, currency],
-  )
+    [locale, currency]
+  );
   const formatCurrencyPrecise = React.useCallback(
     (value: number, fractionDigits: number = 2) =>
       new Intl.NumberFormat(locale, {
@@ -390,12 +435,25 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         minimumFractionDigits: fractionDigits,
         maximumFractionDigits: fractionDigits,
       }).format(value),
-    [locale, currency],
-  )
-  const convertUSD = React.useCallback((valueUSD: number) => valueUSD * selectedRate, [selectedRate])
-  const formatCurrencyFromUSD = React.useCallback((valueUSD: number) => formatCurrency(convertUSD(valueUSD)), [convertUSD, formatCurrency])
-  const formatCurrencyCompactFromUSD = React.useCallback((valueUSD: number) => formatCurrencyCompact(convertUSD(valueUSD)), [convertUSD, formatCurrencyCompact])
-  const formatCurrencyPreciseFromUSD = React.useCallback((valueUSD: number, fractionDigits: number = 2) => formatCurrencyPrecise(convertUSD(valueUSD), fractionDigits), [convertUSD, formatCurrencyPrecise])
+    [locale, currency]
+  );
+  const convertUSD = React.useCallback(
+    (valueUSD: number) => valueUSD * selectedRate,
+    [selectedRate]
+  );
+  const formatCurrencyFromUSD = React.useCallback(
+    (valueUSD: number) => formatCurrency(convertUSD(valueUSD)),
+    [convertUSD, formatCurrency]
+  );
+  const formatCurrencyCompactFromUSD = React.useCallback(
+    (valueUSD: number) => formatCurrencyCompact(convertUSD(valueUSD)),
+    [convertUSD, formatCurrencyCompact]
+  );
+  const formatCurrencyPreciseFromUSD = React.useCallback(
+    (valueUSD: number, fractionDigits: number = 2) =>
+      formatCurrencyPrecise(convertUSD(valueUSD), fractionDigits),
+    [convertUSD, formatCurrencyPrecise]
+  );
 
   const value: SettingsContextValue = {
     ...state,
@@ -410,13 +468,17 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     formatCurrencyFromUSD,
     formatCurrencyCompactFromUSD,
     formatCurrencyPreciseFromUSD,
-  }
+  };
 
-  return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>
+  return (
+    <SettingsContext.Provider value={value}>
+      {children}
+    </SettingsContext.Provider>
+  );
 }
 
 export function useSettings() {
-  const ctx = React.useContext(SettingsContext)
-  if (!ctx) throw new Error('useSettings must be used within SettingsProvider')
-  return ctx
+  const ctx = React.useContext(SettingsContext);
+  if (!ctx) throw new Error('useSettings must be used within SettingsProvider');
+  return ctx;
 }
