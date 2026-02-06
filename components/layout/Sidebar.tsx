@@ -33,13 +33,15 @@ export const Sidebar = () => {
       borderRightWidth={{ base: '0', md: '1px' }}
       borderBottomWidth={{ base: '1px', md: '0' }}
       borderColor="var(--border)"
-      bg="var(--background)"
+      bg="var(--surface)"
       color="var(--foreground)"
       py="6"
       px="4"
     >
       <Flex h="14" mb="10">
-        <img src="/logo.png" alt="logo" />
+        <NextLink href="/">
+          <img src="/logo.png" alt="logo" />
+        </NextLink>
       </Flex>
 
       <VStack gap="2" align="stretch">
@@ -57,15 +59,20 @@ export const Sidebar = () => {
                   borderRadius="md"
                   role="group"
                   cursor="pointer"
-                  bg={isActive ? 'var(--primary)' : 'transparent'}
+                  w="full"
+                  bg={isActive ? 'rgba(0, 120, 242, 0.1)' : 'transparent'}
+                  borderLeft={
+                    isActive
+                      ? '4px solid var(--primary)'
+                      : '4px solid transparent'
+                  }
                   color={
                     isActive ? 'var(--foreground)' : 'var(--text-secondary)'
                   }
                   fontWeight={isActive ? 'bold' : 'medium'}
                   _hover={{
-                    bg: isActive ? 'var(--primary)' : 'whiteAlpha.100',
+                    bg: isActive ? 'rgba(0, 120, 242, 0.15)' : 'whiteAlpha.100',
                     color: 'var(--foreground)',
-                    transform: 'translateX(4px)',
                   }}
                   transition="all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
                 >
@@ -74,7 +81,7 @@ export const Sidebar = () => {
                     mr="4"
                     fontSize="20"
                     color={
-                      isActive ? 'var(--foreground)' : 'var(--text-secondary)'
+                      isActive ? 'var(--primary)' : 'var(--text-secondary)'
                     }
                   />
                   <Text suppressHydrationWarning>{t(link.name)}</Text>

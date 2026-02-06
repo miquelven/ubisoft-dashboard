@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { Flex, HStack, Text, Box, Image } from "@chakra-ui/react";
-import mockData from "@/services/mockData.json";
-import { useSettings } from "@/components/ui/settings";
+import { Flex, HStack, Text, Box, Icon, Menu } from '@chakra-ui/react';
+import mockData from '@/services/mockData.json';
+import { useSettings } from '@/components/ui/settings';
+import { NativeSelectField, NativeSelectRoot } from '../ui/native-select';
+import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
 
 export const Header = () => {
-  const { compactMode } = useSettings();
+  const { compactMode, language, setLanguage, t } = useSettings();
   return (
     <Flex
       as="header"
@@ -15,49 +17,87 @@ export const Header = () => {
       justifyContent="space-between"
       borderBottomWidth="1px"
       borderColor="var(--border)"
-      bg="var(--background)"
+      bg="var(--surface)"
       px="8"
       pos="sticky"
       top="0"
       zIndex="sticky"
-      backdropFilter="blur(12px)"
-      background="transparent"
       _dark={{
-        bg: 'blackAlpha.500',
+        bg: 'var(--surface)',
         borderColor: 'var(--border)',
       }}
     >
-      <Text fontSize="xl" fontWeight="bold" letterSpacing="tight" color="var(--foreground)">
+      <Text
+        fontSize="xl"
+        fontWeight="bold"
+        letterSpacing="tight"
+        color="var(--foreground)"
+      >
         UBISOFT DASHBOARD
       </Text>
 
       <HStack gap="4">
-        <HStack gap="3" borderLeftWidth="1px" pl="4" borderColor="border">
-          <Box
-            w="8"
-            h="8"
-            borderRadius="full"
-            overflow="hidden"
-            bg="gray.200"
-            borderWidth="1px"
+        <NativeSelectRoot width="120px">
+          <NativeSelectField
+            value={language}
+            onChange={(e) => setLanguage(e.target.value as any)}
+            fontSize="sm"
           >
-            <Image
-              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${mockData.currentUser.name}`}
-              alt="User Avatar"
-              w="full"
-              h="full"
-              objectFit="cover"
-            />
-          </Box>
-          <Box display={{ base: 'none', md: 'block' }}>
-            <Text fontSize="sm" fontWeight="medium">
-              {mockData.currentUser.name}
-            </Text>
-            <Text fontSize="xs" color="fg.muted">
-              {mockData.currentUser.role}
-            </Text>
-          </Box>
-        </HStack>
+            <option value="en">EN</option>
+            <option value="pt">PT</option>
+            <option value="es">ES</option>
+          </NativeSelectField>
+        </NativeSelectRoot>
+        
+        <Menu.Root positioning={{ placement: 'bottom-end' }}>
+          <Menu.Trigger asChild>
+            <HStack 
+              gap="3" 
+              borderLeftWidth="1px" 
+              pl="4" 
+              borderColor="border" 
+              cursor="pointer"
+              _hover={{ opacity: 0.8 }}
+            >
+              <Flex
+                w="8"
+                h="8"
+                borderRadius="full"
+                bg="gray.200"
+                borderWidth="1px"
+                align="center"
+                justify="center"
+              >
+                <Icon as={FiUser} color="gray.600" />
+              </Flex>
+              <Box display={{ base: 'none', md: 'block' }}>
+                <Text fontSize="sm" fontWeight="medium">
+                  {mockData.currentUser.name}
+                </Text>
+                <Text fontSize="xs" color="fg.muted">
+                  {mockData.currentUser.role}
+                </Text>
+              </Box>
+            </HStack>
+          </Menu.Trigger>
+          <Menu.Positioner>
+            <Menu.Content bg="var(--surface)" borderColor="var(--border)">
+              <Menu.Item value="profile" gap="2" color="var(--foreground)" _hover={{ bg: 'var(--primary)', color: 'white' }}>
+                <Icon as={FiUser} />
+                {t('Profile')}
+              </Menu.Item>
+              <Menu.Item value="settings" gap="2" color="var(--foreground)" _hover={{ bg: 'var(--primary)', color: 'white' }}>
+                <Icon as={FiSettings} />
+                {t('Settings')}
+              </Menu.Item>
+              <Menu.Separator borderColor="var(--border)" />
+              <Menu.Item value="logout" gap="2" color="red.500" _hover={{ bg: 'red.500', color: 'white' }}>
+                <Icon as={FiLogOut} />
+                {t('Logout')}
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Positioner>
+        </Menu.Root>
       </HStack>
     </Flex>
   );

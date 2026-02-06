@@ -1,23 +1,24 @@
 @import 'tailwindcss';
 
 :root {
-  /* User Palette */
-  --background: #0B0F1A; /* Background principal */
-  --surface: #131A2A;    /* Surface / Cards */
-  --border: #1E2A44;     /* Bordas / Dividers */
-  --foreground: #E6E9F0; /* Texto principal */
-  --text-secondary: #9AA4BF; /* Texto secundário */
-  
+  /* Ubisoft Palette */
+  --background: #000000; /* Background principal */
+  --surface: #1a1a1a; /* Surface / Cards */
+  --border: #2c2c2c; /* Bordas / Dividers */
+  --foreground: #ffffff; /* Texto principal */
+  --text-secondary: #a0a0a0; /* Texto secundário */
+
   /* Accents */
-  --primary: #5B8CFF; /* Azul tech */
-  --secondary: #8B5CF6; /* Roxo moderno */
-  
+  --primary: #0078f2; /* Azul Ubisoft */
+  --secondary: #ffffff; /* Branco */
+
   /* Charts */
-  --chart-blue: #5B8CFF;
-  --chart-purple: #8B5CF6;
-  --chart-green: #22C55E;
-  --chart-orange: #F97316;
-  --chart-pink: #EC4899;
+  --chart-blue: #0078f2;
+  --chart-purple: #a0a0a0;
+  --chart-green: #22c55e;
+  --chart-orange: #f97316;
+  --chart-pink: #cccccc;
+    --green: #28a745;
 }
 
 @theme inline {
@@ -27,7 +28,7 @@
   --color-border-custom: var(--border);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -36,7 +37,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  background-image: radial-gradient(circle at 50% 0%, rgba(91, 140, 255, 0.08) 0%, transparent 50%);
 }
 
 /* Remove focus outlines/rings globally as requested */
@@ -48,7 +48,8 @@ body {
   outline: none !important;
   box-shadow: none !important;
 }
-a:focus, button:focus {
+a:focus,
+button:focus {
   outline: none !important;
   box-shadow: none !important;
 }

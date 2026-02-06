@@ -45,7 +45,11 @@ export default function Home() {
   return (
     <Box>
       <Box mb="8">
-        <Heading size="2xl" mb="2" color="var(--foreground)">
+        <Heading
+          size={{ base: 'xl', md: '2xl' }}
+          mb="2"
+          color="var(--foreground)"
+        >
           {t('Dashboard Overview')}
         </Heading>
       </Box>
@@ -59,10 +63,14 @@ export default function Home() {
         >
           <Card.Body>
             <HStack mb="2" align="center" gap="2" color="var(--foreground)">
-              <Icon as={FiGrid} color="var(--secondary)" />
+              <Icon as={FiGrid} color="var(--primary)" />
               <Card.Title>{t('Active Games')}</Card.Title>
             </HStack>
-            <Text fontSize="4xl" fontWeight="bold" color="var(--secondary)">
+            <Text
+              fontSize={{ base: '3xl', md: '4xl' }}
+              fontWeight="bold"
+              color="var(--foreground)"
+            >
               {mockData.studio.activeGames}
             </Text>
           </Card.Body>
@@ -78,7 +86,11 @@ export default function Home() {
               <Icon as={FiUsers} color="var(--primary)" />
               <Card.Title>{t('Monthly Active Users')}</Card.Title>
             </HStack>
-            <Text fontSize="4xl" fontWeight="bold" color="var(--primary)">
+            <Text
+              fontSize={{ base: '3xl', md: '4xl' }}
+              fontWeight="bold"
+              color="var(--primary)"
+            >
               {formatNumber(mockData.studio.mau)}
             </Text>
           </Card.Body>
@@ -91,10 +103,14 @@ export default function Home() {
         >
           <Card.Body>
             <HStack mb="2" align="center" gap="2" color="var(--foreground)">
-              <Icon as={FiActivity} color="var(--chart-green)" />
+              <Icon as={FiActivity} color="var(--primary)" />
               <Card.Title>{t('Daily Active Users')}</Card.Title>
             </HStack>
-            <Text fontSize="4xl" fontWeight="bold" color="var(--chart-green)">
+            <Text
+              fontSize={{ base: '3xl', md: '4xl' }}
+              fontWeight="bold"
+              color="var(--primary)"
+            >
               {formatNumber(mockData.studio.dau)}
             </Text>
           </Card.Body>
@@ -107,16 +123,20 @@ export default function Home() {
         >
           <Card.Body>
             <HStack mb="2" align="center" gap="2" color="var(--foreground)">
-              <Icon as={FiDollarSign} color="var(--chart-orange)" />
+              <Icon as={FiDollarSign} color="var(--primary)" />
               <Card.Title>{t('Monthly Revenue')}</Card.Title>
             </HStack>
-            <Text fontSize="4xl" fontWeight="bold" color="var(--chart-orange)">
+            <Text
+              fontSize={{ base: '3xl', md: '4xl' }}
+              fontWeight="bold"
+              color="var(--primary)"
+            >
               {formatCurrencyCompactFromUSD(mockData.studio.monthlyRevenue)}
             </Text>
             <HStack mt="2" gap="2" align="center">
               <Box
-                bg={mockData.studio.growth >= 0 ? 'green.700' : 'red.700'}
-                color="white"
+                bg={'rgba(40, 167, 69, 0.2)'}
+                color="var(--green)"
                 px="3"
                 py="1.5"
                 borderRadius="md"
@@ -129,7 +149,7 @@ export default function Home() {
                   as={
                     mockData.studio.growth >= 0 ? FiTrendingUp : FiTrendingDown
                   }
-                  color={mockData.studio.growth >= 0 ? 'green.300' : 'red.300'}
+                  color={'var(--green)'}
                 />
                 <Text fontWeight="semibold">{`${mockData.studio.growth >= 0 ? '+' : ''}${mockData.studio.growth}%`}</Text>
               </Box>
@@ -141,12 +161,13 @@ export default function Home() {
         bg="var(--surface)"
         borderColor="var(--border)"
         borderWidth="1px"
+        mb="8"
       >
         <Card.Body>
           <Card.Title mb="2" color="var(--foreground)">
             {t('Revenue Trend')}
           </Card.Title>
-          <Box h="100px" w="full">
+          <Box h={{ base: '80px', md: '100px' }} w="full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={mockData.analytics.revenueLastMonths}
@@ -156,12 +177,12 @@ export default function Home() {
                   <linearGradient id="revMini" x1="0" y1="0" x2="0" y2="1">
                     <stop
                       offset="5%"
-                      stopColor="var(--chart-orange)"
+                      stopColor="var(--primary)"
                       stopOpacity={0.8}
                     />
                     <stop
                       offset="95%"
-                      stopColor="var(--chart-orange)"
+                      stopColor="var(--primary)"
                       stopOpacity={0}
                     />
                   </linearGradient>
@@ -187,7 +208,7 @@ export default function Home() {
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke="var(--chart-orange)"
+                  stroke="var(--primary)"
                   fill="url(#revMini)"
                 />
               </AreaChart>

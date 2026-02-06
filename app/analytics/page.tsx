@@ -52,10 +52,24 @@ const generateTimeSeriesData = (days: number, baseValue: number) => {
   return data;
 };
 
+const COLORS = [
+  '#0078F2',
+  '#805AD5',
+  '#0BC5EA',
+  '#D53F8C',
+  '#F6E05E',
+  '#48BB78',
+];
+
 export default function AnalyticsPage() {
   const analytics = getAnalyticsData();
   const games = getGames();
-  const { t, formatCurrencyFromUSD, formatCurrencyPreciseFromUSD, formatNumber } = useSettings();
+  const {
+    t,
+    formatCurrencyFromUSD,
+    formatCurrencyPreciseFromUSD,
+    formatNumber,
+  } = useSettings();
 
   const [selectedPeriod, setSelectedPeriod] = useState('7');
   const [selectedGameId, setSelectedGameId] = useState('all');
@@ -138,9 +152,15 @@ export default function AnalyticsPage() {
 
       <Stack gap="8">
         {/* Engagement Chart */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('Engagement Trends (DAU vs MAU)')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('Engagement Trends (DAU vs MAU)')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Daily vs Monthly Active Users ratio over time')}
             </Text>
@@ -159,24 +179,24 @@ export default function AnalyticsPage() {
                       <linearGradient id="colorDau" x1="0" y1="0" x2="0" y2="1">
                         <stop
                           offset="5%"
-                          stopColor="var(--chart-blue)"
+                          stopColor="var(--primary)"
                           stopOpacity={0.8}
                         />
                         <stop
                           offset="95%"
-                          stopColor="var(--chart-blue)"
+                          stopColor="var(--primary)"
                           stopOpacity={0}
                         />
                       </linearGradient>
                       <linearGradient id="colorMau" x1="0" y1="0" x2="0" y2="1">
                         <stop
                           offset="5%"
-                          stopColor="var(--chart-green)"
+                          stopColor="var(--chart-purple)"
                           stopOpacity={0.8}
                         />
                         <stop
                           offset="95%"
-                          stopColor="var(--chart-green)"
+                          stopColor="var(--chart-purple)"
                           stopOpacity={0}
                         />
                       </linearGradient>
@@ -204,7 +224,7 @@ export default function AnalyticsPage() {
                     <Area
                       type="monotone"
                       dataKey="mau"
-                      stroke="var(--chart-green)"
+                      stroke="var(--chart-purple)"
                       fillOpacity={1}
                       fill="url(#colorMau)"
                       name={t('MAU')}
@@ -212,7 +232,7 @@ export default function AnalyticsPage() {
                     <Area
                       type="monotone"
                       dataKey="value"
-                      stroke="var(--chart-blue)"
+                      stroke="var(--primary)"
                       fillOpacity={1}
                       fill="url(#colorDau)"
                       name={t('DAU')}
@@ -225,9 +245,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* Revenue Chart */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('Monthly Revenue')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('Monthly Revenue')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Gross revenue generated over the last 3 months')}
             </Text>
@@ -263,7 +289,7 @@ export default function AnalyticsPage() {
                     />
                     <Bar
                       dataKey="value"
-                      fill="var(--chart-orange)"
+                      fill="var(--primary)"
                       radius={[4, 4, 0, 0]}
                       name={t('Revenue')}
                     />
@@ -275,9 +301,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* DAU Last 30 Days */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('DAU Last 30 Days')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('DAU Last 30 Days')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Daily active users trend over the last month')}
             </Text>
@@ -289,11 +321,34 @@ export default function AnalyticsPage() {
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={analytics.dauLast30Days}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
-                    <XAxis dataKey="date" stroke="var(--text-secondary)" fontSize={12} tickFormatter={(v) => v.slice(5)} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      opacity={0.3}
+                    />
+                    <XAxis
+                      dataKey="date"
+                      stroke="var(--text-secondary)"
+                      fontSize={12}
+                      tickFormatter={(v) => v.slice(5)}
+                    />
                     <YAxis stroke="var(--text-secondary)" fontSize={12} />
-                    <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }} />
-                    <Line type="monotone" dataKey="value" stroke="var(--primary)" strokeWidth={3} dot={{ r: 3 }} name={t('DAU')} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '8px',
+                        color: 'var(--foreground)',
+                      }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke="var(--primary)"
+                      strokeWidth={3}
+                      dot={{ r: 3 }}
+                      name={t('DAU')}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               )}
@@ -302,9 +357,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* Platform DAU Share */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('Platform DAU Share')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('Platform DAU Share')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Distribution of DAU across platforms')}
             </Text>
@@ -320,7 +381,10 @@ export default function AnalyticsPage() {
                       data={[
                         { name: 'PC', value: analytics.platformDauShare.PC },
                         { name: 'PS5', value: analytics.platformDauShare.PS5 },
-                        { name: 'Xbox Series', value: analytics.platformDauShare['Xbox Series'] },
+                        {
+                          name: 'Xbox Series',
+                          value: analytics.platformDauShare['Xbox Series'],
+                        },
                       ]}
                       cx="50%"
                       cy="50%"
@@ -331,15 +395,24 @@ export default function AnalyticsPage() {
                       nameKey="name"
                       label
                     >
-                      <Cell fill="var(--chart-blue)" />
-                      <Cell fill="var(--chart-orange)" />
-                      <Cell fill="var(--chart-green)" />
+                      <Cell fill="var(--primary)" />
+                      <Cell fill="#0BC5EA" />
+                      <Cell fill="#A0AEC0" />
                     </Pie>
                     <Tooltip
-                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px' }}
+                      contentStyle={{
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '8px',
+                      }}
                       labelStyle={{ color: 'var(--foreground)' }}
                       itemStyle={{ color: 'var(--foreground)' }}
-                      formatter={((value: number | string, name: string) => [formatNumber(Number(value)), name]) as any}
+                      formatter={
+                        ((value: number | string, name: string) => [
+                          formatNumber(Number(value)),
+                          name,
+                        ]) as any
+                      }
                     />
                     <Legend wrapperStyle={{ color: 'var(--foreground)' }} />
                   </PieChart>
@@ -350,9 +423,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* Genre Distribution */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('Genre Distribution')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('Genre Distribution')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Count of games per genre')}
             </Text>
@@ -363,12 +442,41 @@ export default function AnalyticsPage() {
                 <Skeleton height="100%" width="100%" borderRadius="md" />
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={analytics.genreDistribution} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
-                    <XAxis dataKey="genre" stroke="var(--text-secondary)" fontSize={12} />
+                  <BarChart
+                    data={analytics.genreDistribution}
+                    margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      opacity={0.3}
+                    />
+                    <XAxis
+                      dataKey="genre"
+                      stroke="var(--text-secondary)"
+                      fontSize={12}
+                    />
                     <YAxis stroke="var(--text-secondary)" fontSize={12} />
-                    <Tooltip contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }} />
-                    <Bar dataKey="count" fill="var(--secondary)" radius={[4, 4, 0, 0]} name={t('Count')} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '8px',
+                        color: 'var(--foreground)',
+                      }}
+                    />
+                    <Bar
+                      dataKey="count"
+                      radius={[4, 4, 0, 0]}
+                      name={t('Count')}
+                    >
+                      {analytics.genreDistribution.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -377,9 +485,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* Revenue by Region */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('Revenue by Region')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('Revenue by Region')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Gross revenue distribution across regions')}
             </Text>
@@ -394,17 +508,41 @@ export default function AnalyticsPage() {
                     data={[
                       { region: 'NA', value: analytics.revenueByRegion.NA },
                       { region: 'EU', value: analytics.revenueByRegion.EU },
-                      { region: 'LATAM', value: analytics.revenueByRegion.LATAM },
+                      {
+                        region: 'LATAM',
+                        value: analytics.revenueByRegion.LATAM,
+                      },
                     ]}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      opacity={0.3}
+                    />
                     <XAxis dataKey="region" stroke="var(--text-secondary)" />
                     <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
-                      formatter={(value: number | undefined) => (value !== undefined ? formatCurrencyPreciseFromUSD(value, 2) : '')}
-                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                      formatter={(value: number | undefined) =>
+                        value !== undefined
+                          ? formatCurrencyPreciseFromUSD(value, 2)
+                          : ''
+                      }
+                      contentStyle={{
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '8px',
+                        color: 'var(--foreground)',
+                      }}
                     />
-                    <Bar dataKey="value" fill="var(--primary)" radius={[4, 4, 0, 0]} name={t('Revenue')} />
+                    <Bar
+                      dataKey="value"
+                      radius={[4, 4, 0, 0]}
+                      name={t('Revenue')}
+                    >
+                      <Cell fill="#0078F2" /> {/* NA - Blue */}
+                      <Cell fill="#805AD5" /> {/* EU - Purple */}
+                      <Cell fill="#0BC5EA" /> {/* LATAM - Cyan */}
+                    </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -413,9 +551,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* ARPPU Last Months */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('ARPPU Last Months')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('ARPPU Last Months')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Average revenue per paying user')}
             </Text>
@@ -427,14 +571,32 @@ export default function AnalyticsPage() {
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={analytics.arppuLastMonths}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      opacity={0.3}
+                    />
                     <XAxis dataKey="month" stroke="var(--text-secondary)" />
                     <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
-                      formatter={(value: number | undefined) => (value !== undefined ? formatCurrencyFromUSD(value) : '')}
-                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                      formatter={(value: number | undefined) =>
+                        value !== undefined ? formatCurrencyFromUSD(value) : ''
+                      }
+                      contentStyle={{
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '8px',
+                        color: 'var(--foreground)',
+                      }}
                     />
-                    <Line type="monotone" dataKey="value" stroke="var(--chart-blue)" strokeWidth={3} dot={{ r: 3 }} name={t('ARPPU')} />
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke="var(--primary)"
+                      strokeWidth={3}
+                      dot={{ r: 3 }}
+                      name={t('ARPPU')}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               )}
@@ -443,9 +605,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* Conversion Funnel */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('Conversion Funnel')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('Conversion Funnel')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Visits to paying users')}
             </Text>
@@ -456,15 +624,41 @@ export default function AnalyticsPage() {
                 <Skeleton height="100%" width="100%" borderRadius="md" />
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={analytics.conversionFunnel} layout="vertical" margin={{ left: 60 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
-                    <XAxis type="number" stroke="var(--text-secondary)" />
-                    <YAxis type="category" dataKey="stage" stroke="var(--text-secondary)" />
-                    <Tooltip
-                      formatter={(value: number | undefined) => (value ? value.toLocaleString() : '')}
-                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                  <BarChart
+                    data={analytics.conversionFunnel}
+                    layout="vertical"
+                    margin={{ left: 60 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      opacity={0.3}
                     />
-                    <Bar dataKey="value" fill="var(--secondary)" radius={[4, 4, 4, 4]} />
+                    <XAxis type="number" stroke="var(--text-secondary)" />
+                    <YAxis
+                      type="category"
+                      dataKey="stage"
+                      stroke="var(--text-secondary)"
+                    />
+                    <Tooltip
+                      formatter={(value: number | undefined) =>
+                        value ? value.toLocaleString() : ''
+                      }
+                      contentStyle={{
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '8px',
+                        color: 'var(--foreground)',
+                      }}
+                    />
+                    <Bar dataKey="value" radius={[4, 4, 4, 4]}>
+                      {analytics.conversionFunnel.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -473,9 +667,15 @@ export default function AnalyticsPage() {
         </Card.Root>
 
         {/* Session Duration Distribution */}
-        <Card.Root bg="var(--surface)" borderColor="var(--border)" borderWidth="1px">
+        <Card.Root
+          bg="var(--surface)"
+          borderColor="var(--border)"
+          borderWidth="1px"
+        >
           <Card.Header>
-            <Heading size="md" color="var(--foreground)">{t('Session Duration')}</Heading>
+            <Heading size="md" color="var(--foreground)">
+              {t('Session Duration')}
+            </Heading>
             <Text fontSize="sm" color="var(--text-secondary)">
               {t('Percentage of sessions by duration bucket')}
             </Text>
@@ -487,14 +687,30 @@ export default function AnalyticsPage() {
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={analytics.sessionBuckets}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.3} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      opacity={0.3}
+                    />
                     <XAxis dataKey="label" stroke="var(--text-secondary)" />
                     <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
-                      formatter={(value: number | undefined) => (value !== undefined ? `${value}%` : '')}
-                      contentStyle={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--foreground)' }}
+                      formatter={(value: number | undefined) =>
+                        value !== undefined ? `${value}%` : ''
+                      }
+                      contentStyle={{
+                        backgroundColor: 'var(--surface)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '8px',
+                        color: 'var(--foreground)',
+                      }}
                     />
-                    <Bar dataKey="value" fill="var(--chart-green)" radius={[4, 4, 0, 0]} name={t('Percent')} />
+                    <Bar
+                      dataKey="value"
+                      fill="var(--primary)"
+                      radius={[4, 4, 0, 0]}
+                      name={t('Percent')}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               )}

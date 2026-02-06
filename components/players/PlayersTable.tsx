@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  Badge,
-  HStack,
-  Table,
-  Text,
-  Box,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Badge, HStack, Table, Text, Box, Skeleton } from '@chakra-ui/react';
 import { CustomEmptyState } from '@/components/ui/custom-empty-state';
 import type { Player } from '@/services/gameService';
 import { FiArrowDown, FiArrowUp } from 'react-icons/fi';
@@ -34,22 +27,88 @@ export const PlayersTable = ({
 
   if (isLoading) {
     return (
-      <Box borderWidth="1px" borderColor="var(--border)" borderRadius="xl" overflow="hidden" bg="var(--surface)" boxShadow="md">
+      <Box
+        borderWidth="1px"
+        borderColor="var(--border)"
+        borderRadius="xl"
+        overflow="hidden"
+        bg="var(--surface)"
+        boxShadow="md"
+      >
         <Table.Root>
-          <Table.Header bg="var(--surface)" borderBottomWidth="1px" borderColor="var(--border)">
+          <Table.Header
+            bg="var(--surface)"
+            borderBottomWidth="1px"
+            borderColor="var(--border)"
+          >
             <Table.Row>
-              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Nickname')}</Table.ColumnHeader>
-              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Region')}</Table.ColumnHeader>
-              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Platform')}</Table.ColumnHeader>
-              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Type')}</Table.ColumnHeader>
-              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Favorite Game')}</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end" textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Hours Played')}</Table.ColumnHeader>
-              <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Last Login')}</Table.ColumnHeader>
+              <Table.ColumnHeader
+                textTransform="uppercase"
+                letterSpacing="wide"
+                fontSize="xs"
+                color="var(--text-secondary)"
+              >
+                {t('Nickname')}
+              </Table.ColumnHeader>
+              <Table.ColumnHeader
+                textTransform="uppercase"
+                letterSpacing="wide"
+                fontSize="xs"
+                color="var(--text-secondary)"
+              >
+                {t('Region')}
+              </Table.ColumnHeader>
+              <Table.ColumnHeader
+                textTransform="uppercase"
+                letterSpacing="wide"
+                fontSize="xs"
+                color="var(--text-secondary)"
+              >
+                {t('Platform')}
+              </Table.ColumnHeader>
+              <Table.ColumnHeader
+                textTransform="uppercase"
+                letterSpacing="wide"
+                fontSize="xs"
+                color="var(--text-secondary)"
+              >
+                {t('Type')}
+              </Table.ColumnHeader>
+              <Table.ColumnHeader
+                textTransform="uppercase"
+                letterSpacing="wide"
+                fontSize="xs"
+                color="var(--text-secondary)"
+              >
+                {t('Favorite Game')}
+              </Table.ColumnHeader>
+              <Table.ColumnHeader
+                textAlign="end"
+                textTransform="uppercase"
+                letterSpacing="wide"
+                fontSize="xs"
+                color="var(--text-secondary)"
+              >
+                {t('Hours Played')}
+              </Table.ColumnHeader>
+              <Table.ColumnHeader
+                textTransform="uppercase"
+                letterSpacing="wide"
+                fontSize="xs"
+                color="var(--text-secondary)"
+              >
+                {t('Last Login')}
+              </Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {Array.from({ length: 5 }).map((_, i) => (
-              <Table.Row key={i} borderBottomWidth="1px" borderColor="var(--border)" _last={{ borderBottomWidth: 0 }}>
+              <Table.Row
+                key={i}
+                borderBottomWidth="1px"
+                borderColor="var(--border)"
+                _last={{ borderBottomWidth: 0 }}
+              >
                 <Table.Cell>
                   <Skeleton height="20px" width="140px" />
                 </Table.Cell>
@@ -80,51 +139,114 @@ export const PlayersTable = ({
   }
 
   return (
-    <Box borderWidth="1px" borderColor="var(--border)" borderRadius="xl" overflow="hidden" bg="var(--surface)" boxShadow="md">
+    <Box
+      borderWidth="1px"
+      borderColor="var(--border)"
+      borderRadius="xl"
+      overflow="hidden"
+      bg="var(--surface)"
+      boxShadow="md"
+    >
       <Table.Root interactive>
-        <Table.Header bg="var(--surface)" borderBottomWidth="1px" borderColor="var(--border)" position="sticky" top="0" zIndex="sticky">
+        <Table.Header
+          bg="var(--surface)"
+          borderBottomWidth="1px"
+          borderColor="var(--border)"
+          position="sticky"
+          top="0"
+          zIndex="sticky"
+        >
           <Table.Row>
             <Table.ColumnHeader
               cursor="pointer"
               onClick={() => onSort('nickname')}
-              _hover={{ bg: 'bg.muted' }}
+              _hover={{ bg: 'rgba(255, 255, 255, 0.03)' }}
             >
               <HStack gap="1">
-                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Nickname')}</Text>
+                <Text
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                  color="var(--text-secondary)"
+                >
+                  {t('Nickname')}
+                </Text>
                 {getSortIcon('nickname')}
               </HStack>
             </Table.ColumnHeader>
             <Table.ColumnHeader
               cursor="pointer"
               onClick={() => onSort('region')}
-              _hover={{ bg: 'bg.muted' }}
+              _hover={{ bg: 'rgba(255, 255, 255, 0.03)' }}
             >
               <HStack gap="1">
-                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Region')}</Text>
+                <Text
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                  color="var(--text-secondary)"
+                >
+                  {t('Region')}
+                </Text>
                 {getSortIcon('region')}
               </HStack>
             </Table.ColumnHeader>
-            <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Platform')}</Table.ColumnHeader>
-            <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Type')}</Table.ColumnHeader>
-            <Table.ColumnHeader textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Favorite Game')}</Table.ColumnHeader>
+            <Table.ColumnHeader
+              textTransform="uppercase"
+              letterSpacing="wide"
+              fontSize="xs"
+              color="var(--text-secondary)"
+            >
+              {t('Platform')}
+            </Table.ColumnHeader>
+            <Table.ColumnHeader
+              textTransform="uppercase"
+              letterSpacing="wide"
+              fontSize="xs"
+              color="var(--text-secondary)"
+            >
+              {t('Type')}
+            </Table.ColumnHeader>
+            <Table.ColumnHeader
+              textTransform="uppercase"
+              letterSpacing="wide"
+              fontSize="xs"
+              color="var(--text-secondary)"
+            >
+              {t('Favorite Game')}
+            </Table.ColumnHeader>
             <Table.ColumnHeader
               textAlign="end"
               cursor="pointer"
               onClick={() => onSort('hoursPlayed')}
-              _hover={{ bg: 'bg.muted' }}
+              _hover={{ bg: 'rgba(255, 255, 255, 0.03)' }}
             >
               <HStack gap="1" justify="flex-end">
-                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Hours Played')}</Text>
+                <Text
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                  color="var(--text-secondary)"
+                >
+                  {t('Hours Played')}
+                </Text>
                 {getSortIcon('hoursPlayed')}
               </HStack>
             </Table.ColumnHeader>
             <Table.ColumnHeader
               cursor="pointer"
               onClick={() => onSort('lastLogin')}
-              _hover={{ bg: 'bg.muted' }}
+              _hover={{ bg: 'rgba(255, 255, 255, 0.03)' }}
             >
               <HStack gap="1">
-                <Text textTransform="uppercase" letterSpacing="wide" fontSize="xs" color="var(--text-secondary)">{t('Last Login')}</Text>
+                <Text
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                  color="var(--text-secondary)"
+                >
+                  {t('Last Login')}
+                </Text>
                 {getSortIcon('lastLogin')}
               </HStack>
             </Table.ColumnHeader>
@@ -132,24 +254,53 @@ export const PlayersTable = ({
         </Table.Header>
         <Table.Body>
           {players.map((p) => (
-            <Table.Row key={p.id} _hover={{ bg: 'whiteAlpha.50' }} borderBottomWidth="1px" borderColor="var(--border)" _last={{ borderBottomWidth: 0 }} _odd={{ bg: 'blackAlpha.50' }}>
-              <Table.Cell fontWeight="medium" py={compactMode ? '2' : '3'}>{p.nickname}</Table.Cell>
-              <Table.Cell color="fg.muted" py={compactMode ? '2' : '3'}>{p.region}</Table.Cell>
+            <Table.Row
+              key={p.id}
+              _hover={{ bg: 'rgba(255, 255, 255, 0.03)' }}
+              borderBottomWidth="1px"
+              borderColor="var(--border)"
+              _last={{ borderBottomWidth: 0 }}
+            >
+              <Table.Cell fontWeight="medium" py={compactMode ? '2' : '3'}>
+                {p.nickname}
+              </Table.Cell>
+              <Table.Cell
+                color="var(--text-secondary)"
+                py={compactMode ? '2' : '3'}
+              >
+                {p.region}
+              </Table.Cell>
               <Table.Cell py={compactMode ? '2' : '3'}>
-                <Badge variant="surface" size="sm">
+                <Badge
+                  variant="subtle"
+                  colorScheme="gray"
+                  bg="rgba(255,255,255,0.05)"
+                  color="var(--text-secondary)"
+                  borderWidth="1px"
+                  borderColor="var(--border)"
+                >
                   {p.platform}
                 </Badge>
               </Table.Cell>
               <Table.Cell py={compactMode ? '2' : '3'}>
-                <Badge colorPalette={p.type === 'Hardcore' ? 'purple' : 'gray'}>
-                  {p.type}
+                <Badge colorScheme={p.type === 'Hardcore' ? 'blue' : 'gray'}>
+                  {t(p.type)}
                 </Badge>
               </Table.Cell>
-              <Table.Cell py={compactMode ? '2' : '3'}>{p.favoriteGame}</Table.Cell>
-              <Table.Cell textAlign="end" fontWeight="medium" py={compactMode ? '2' : '3'} suppressHydrationWarning>
+              <Table.Cell py={compactMode ? '2' : '3'}>
+                {p.favoriteGame}
+              </Table.Cell>
+              <Table.Cell
+                textAlign="end"
+                fontWeight="medium"
+                py={compactMode ? '2' : '3'}
+                suppressHydrationWarning
+              >
                 {formatNumber(p.hoursPlayed)}
               </Table.Cell>
-              <Table.Cell py={compactMode ? '2' : '3'}>{p.lastLogin}</Table.Cell>
+              <Table.Cell py={compactMode ? '2' : '3'}>
+                {p.lastLogin}
+              </Table.Cell>
             </Table.Row>
           ))}
           {players.length === 0 && (
