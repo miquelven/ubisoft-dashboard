@@ -272,8 +272,10 @@ export default function GameDetailsPage() {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value: number | undefined) =>
-                      value !== undefined ? formatCurrencyFromUSD(value) : ''
+                    formatter={(value) =>
+                      typeof value === 'number'
+                        ? formatCurrencyFromUSD(value)
+                        : ''
                     }
                     contentStyle={{
                       backgroundColor: 'var(--surface)',
@@ -284,7 +286,11 @@ export default function GameDetailsPage() {
                     labelStyle={{ color: 'var(--foreground)' }}
                     itemStyle={{ color: 'var(--foreground)' }}
                   />
-                  <Legend verticalAlign="bottom" height={36} wrapperStyle={{ color: 'var(--foreground)' }} />
+                  <Legend
+                    verticalAlign="bottom"
+                    height={36}
+                    wrapperStyle={{ color: 'var(--foreground)' }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </Box>

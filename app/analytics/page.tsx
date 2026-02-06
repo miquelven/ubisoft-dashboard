@@ -277,8 +277,10 @@ export default function AnalyticsPage() {
                     <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
                       cursor={{ fill: 'transparent' }}
-                      formatter={(value: number | undefined) =>
-                        value !== undefined ? formatCurrencyFromUSD(value) : ''
+                      formatter={(value) =>
+                        typeof value === 'number'
+                          ? formatCurrencyFromUSD(value)
+                          : ''
                       }
                       contentStyle={{
                         backgroundColor: 'var(--surface)',
@@ -522,8 +524,8 @@ export default function AnalyticsPage() {
                     <XAxis dataKey="region" stroke="var(--text-secondary)" />
                     <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
-                      formatter={(value: number | undefined) =>
-                        value !== undefined
+                      formatter={(value) =>
+                        typeof value === 'number'
                           ? formatCurrencyPreciseFromUSD(value, 2)
                           : ''
                       }
@@ -579,8 +581,10 @@ export default function AnalyticsPage() {
                     <XAxis dataKey="month" stroke="var(--text-secondary)" />
                     <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
-                      formatter={(value: number | undefined) =>
-                        value !== undefined ? formatCurrencyFromUSD(value) : ''
+                      formatter={(value) =>
+                        typeof value === 'number'
+                          ? formatCurrencyFromUSD(value)
+                          : ''
                       }
                       contentStyle={{
                         backgroundColor: 'var(--surface)',
@@ -641,8 +645,8 @@ export default function AnalyticsPage() {
                       stroke="var(--text-secondary)"
                     />
                     <Tooltip
-                      formatter={(value: number | undefined) =>
-                        value ? value.toLocaleString() : ''
+                      formatter={(value) =>
+                        typeof value === 'number' ? value.toLocaleString() : ''
                       }
                       contentStyle={{
                         backgroundColor: 'var(--surface)',
@@ -695,8 +699,8 @@ export default function AnalyticsPage() {
                     <XAxis dataKey="label" stroke="var(--text-secondary)" />
                     <YAxis stroke="var(--text-secondary)" />
                     <Tooltip
-                      formatter={(value: number | undefined) =>
-                        value !== undefined ? `${value}%` : ''
+                      formatter={(value) =>
+                        typeof value === 'number' ? `${value}%` : ''
                       }
                       contentStyle={{
                         backgroundColor: 'var(--surface)',
