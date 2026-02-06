@@ -38,23 +38,8 @@ export const Sidebar = () => {
       py="6"
       px="4"
     >
-      <Flex h="10" alignItems="center" mb="10" px="4">
-        {/* Swirl-like representation using a simple circle shape for now, or just text */}
-        <Box
-          w="8"
-          h="8"
-          borderRadius="full"
-          bgGradient="to-tr"
-          gradientFrom="var(--primary)"
-          gradientTo="var(--secondary)"
-          mr="3"
-        />
-        <Text fontSize="2xl" fontWeight="bold" letterSpacing="tight">
-          UBISOFT{' '}
-          <Text as="span" color="var(--primary)">
-            CONNECT
-          </Text>
-        </Text>
+      <Flex h="14" mb="10">
+        <img src="/logo.png" alt="logo" />
       </Flex>
 
       <VStack gap="2" align="stretch">
