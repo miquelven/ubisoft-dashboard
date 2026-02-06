@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   /* Ubisoft Palette */
@@ -18,7 +20,7 @@
   --chart-green: #22c55e;
   --chart-orange: #f97316;
   --chart-pink: #cccccc;
-    --green: #28a745;
+  --green: #28a745;
 }
 
 @theme inline {
